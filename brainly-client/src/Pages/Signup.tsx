@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import Button from "../Components/Button"
 import Input from "../Components/Input"
 import React, { useState } from "react"
-import axios from "axios"
+import axios, { AxiosError, AxiosResponse } from "axios"
 import toast, { Toaster } from 'react-hot-toast';
 
 const Signup = () => {
@@ -14,10 +14,10 @@ const Signup = () => {
   const handleChange=(e:React.ChangeEvent<HTMLInputElement>)=>{
     setData({...data,[e.target.name]:e.target.value})
   }
-  const handleToast = (response:any) => {
-    response.status==409?toast.error("User already exists!!!"):null
-    response.status==400?toast.error("Give Valid Email and Password should contains 1 Uppercase 1 number and 1 special charecter minimum"):null
-    response.status==200?toast.success("User Signup Successful"):null
+  const handleToast = (response:AxiosResponse|AxiosError) => {
+    response.status==409&&toast.error("User already exists!!!")
+    response.status==400&&toast.error("Give Valid Email and Password should contains 1 Uppercase 1 number and 1 special charecter minimum")
+    response.status==200&&toast.success("User Signup Successful")
   }
   const handleSubmit=(e:React.FormEvent<HTMLFormElement>)=>{
     e.preventDefault()

@@ -14,9 +14,9 @@ export const jwtAuth=(req:Request,res:Response,next:NextFunction)=>{
             req.id=decoded.id
             next()
         }else{
-            res.send("Authorization Error")
+            res.status(401).send("Authorization Error")
         }
     } catch(err) {
-        res.send("Authorization Error")
+        res.status(500).send("Authorization Error")
     }
 }

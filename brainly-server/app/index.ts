@@ -69,12 +69,12 @@ app.post('/signin', async (req, res) => {
             const matched=await bcrypt.compare(req.body.password,user.password)
             if(matched){
                 const token =jwt.sign({id:user._id}, String(process.env.JWT_SECRET_KEY), { expiresIn: '1h' });
-                res.json({"token":token})
+                res.status(200).json({"token":token})
             }else{
-                res.send("invalid credentials")
+                res.status(400).send("invalid credentials")
             }
         }else{
-            res.send("user doesn't exist")
+            res.status(404).send("user doesn't exist")
         }
     } catch (error) {
         console.log(error);
