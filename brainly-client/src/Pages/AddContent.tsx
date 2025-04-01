@@ -22,7 +22,6 @@ const AddContent:React.FC<AddContentProps> = ({isOpen,changeOpen}) => {
     setData({title:"",link:""})
     changeOpen(!isOpen)
   }
-  console.log(isOpen);
   return (
     <div className={`w-screen h-screen bg-ppurple-600 absolute top-0 left-0 bg-opacity-50 flex justify-center items-center ${isOpen ? "block" : "hidden"}`} onClick={onClose}>
       <form onSubmit={handleSubmit} className="bg-white w-96 h-96 opacity-100 rounded-lg flex flex-col items-center" onClick={(e)=>{e.stopPropagation()}}>

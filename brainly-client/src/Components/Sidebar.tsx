@@ -10,7 +10,7 @@ const Sidebar = () => {
                 <SidebarItems text="Tweets" icon={<SlSocialTwitter/>}/>
                 <SidebarItems text="Videos" icon={<SlSocialYoutube/>}/>
                 {/* <SidebarItems text="Documents" icon={<HiOutlineDocumentText/>}/> */}
-                <SidebarItems text="Links" icon={<HiLink/>}/>
+                {/* <SidebarItems text="Links" icon={<HiLink/>}/> */}
                 <SidebarItems text="Tags" icon={<HiHashtag/>}/>
             </div>
         </div>

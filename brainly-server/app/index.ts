@@ -97,10 +97,10 @@ app.post('/content',jwtAuth ,async (req, res) => {
 app.get('/content', jwtAuth,async (req, res) => {
     try {
         const contents=await Content.find({createdBy:req.id});
-        res.json({"contents":contents})
+        res.status(200).json({"contents":contents})
     } catch (error) {
         console.log(error);
-        res.send(error);
+        res.status(500).send(error);
     }
 });
 app.get('/content/:id',jwtAuth,async (req, res) => {

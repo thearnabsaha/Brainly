@@ -3,7 +3,7 @@ import { SlSocialTwitter,SlSocialYoutube } from "react-icons/sl";
 import { RiDeleteBinLine } from "react-icons/ri";
 
 interface cardInterface{
-    id:number,
+    id:string,
     title:string,
     link:string,
     tags:string[],
@@ -15,7 +15,7 @@ const Card = ({id,title,link,tags,date}:cardInterface) => {
     const twitter=link.includes("x.com") || link.includes("twitter.com") 
     const youtube=link.includes("youtube.com")
   return (
-                    <div className=" bg-white w-80 h-fit overflow-auto rounded-lg">
+                    <div className=" bg-white w-80 h-[420px] overflow-auto rounded-lg">
                         <div className="flex justify-between items-center p-5">
                             <div>
                                 {twitter&&<SlSocialTwitter fontSize={20} className=" text-pgrey-400 cursor-pointer"/>}
