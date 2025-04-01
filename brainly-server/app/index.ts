@@ -48,7 +48,7 @@ app.post('/signup', async (req, res) => {
         res.status(400).send(result.error.format());
     } else {
         try {
-            const user=await User.findOne({username:req.body.username})
+            const user=await User.findOne({username:req.body.username,email:req.body.email}) ||await User.findOne({email:req.body.email})
             if(!user){
                 const hashedPassword=await bcrypt.hash(req.body.password, 10)
                 await User.create({username:req.body.username,password:hashedPassword,email:req.body.email})

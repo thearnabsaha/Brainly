@@ -18,7 +18,6 @@ const Signup = () => {
     response.status==409?toast.error("User already exists!!!"):null
     response.status==400?toast.error("Give Valid Email and Password should contains 1 Uppercase 1 number and 1 special charecter minimum"):null
     response.status==200?toast.success("User Signup Successful"):null
-    console.log(response);
   }
   const handleSubmit=(e:React.FormEvent<HTMLFormElement>)=>{
     e.preventDefault()
@@ -42,7 +41,9 @@ const Signup = () => {
                 <Input type="text" placeholder="Username" value={data.username} change={handleChange} name="username"/>
                 <Input type="email" placeholder="Email" value={data.email} change={handleChange} name="email"/>
                 <Input type="password" placeholder="Password" value={data.password} change={handleChange} name="password"/>
-                <Link to="signin" className="w-72 underline text-ppurple-600 text-right pr-5">Sign In</Link>
+                <div className="w-72 text-right">
+                  <Link to="signin" className="underline text-ppurple-600 pr-5 hover:text-ppurple-400">Sign In</Link>
+                </div>
                 <Button text="Sumbit" type="primary" newClasses="mt-2 w-72 justify-center" disabled={!(data.username&&data.email&&data.password)}/>
             </form>
         </div>

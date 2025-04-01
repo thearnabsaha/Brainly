@@ -25,7 +25,9 @@ const Signin = () => {
         <form onSubmit={handleSubmit} className=" flex flex-col pb-10 justify-center items-center">
             <Input type="text" placeholder="Username" name="username" value={data.username} change={handleChange}/>
             <Input type="password" placeholder="Password" name="password" value={data.password} change={handleChange}/>
-            <Link to="/" className="w-72 underline text-ppurple-600 text-right pr-5">Sign Up</Link>
+            <div className="w-72 text-right">
+              <Link to="/" className="underline text-ppurple-600 hover:text-ppurple-400 pr-5">Sign In</Link>
+            </div>
             <Button text="Sumbit" type="primary" newClasses="mt-2 w-72 justify-center" disabled={!(data.username&&data.password)}/>
         </form>
     </div>
