@@ -45,21 +45,21 @@ app.get('/', (req, res) => {
 app.post('/signup', async (req, res) => {
     const result = schema.safeParse(req.body);
     if (!result.success) {
-        res.send(result.error.format());
+        res.status(400).send(result.error.format());
     } else {
         try {
             const user=await User.findOne({username:req.body.username})
             if(!user){
                 const hashedPassword=await bcrypt.hash(req.body.password, 10)
                 await User.create({username:req.body.username,password:hashedPassword,email:req.body.email})
-                res.send("you signup successfully!")
+                res.status(200).send("you signup successfully!")
             }else{
-                res.send("user already exists!!!")
+                res.status(409).send("user already exists!!!")
             }
         } catch (error) {
             console.log(error);
             res.send(error);
-    }
+        }
     }
 });
 app.post('/signin', async (req, res) => {

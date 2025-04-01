@@ -2,6 +2,8 @@ import { Link } from "react-router-dom"
 import Button from "../Components/Button"
 import Input from "../Components/Input"
 import React, { useState } from "react"
+import axios from "axios"
+import toast, { Toaster } from 'react-hot-toast';
 
 const Signup = () => {
   const [data, setData] = useState({
@@ -12,13 +14,28 @@ const Signup = () => {
   const handleChange=(e:React.ChangeEvent<HTMLInputElement>)=>{
     setData({...data,[e.target.name]:e.target.value})
   }
+  const handleToast = (response:any) => {
+    response.status==409?toast.error("User already exists!!!"):null
+    response.status==400?toast.error("Give Valid Email and Password should contains 1 Uppercase 1 number and 1 special charecter minimum"):null
+    response.status==200?toast.success("User Signup Successful"):null
+    console.log(response);
+  }
   const handleSubmit=(e:React.FormEvent<HTMLFormElement>)=>{
     e.preventDefault()
-    console.log(data)
-    setData({username:"",email:"",password:""})
+    axios.post('api/signup', {    
+      ...data
+    })
+    .then((response)=>handleToast(response))
+    .catch((response)=>handleToast(response));
+    setData({
+      username:"",
+      email:"",
+      password:""
+    })
   }
   return (
     <div className="bg-purple-50 w-screen h-screen flex items-center justify-center">
+              <Toaster   position="top-right" reverseOrder={false}/>
         <div className="border bg-ppurple-200 rounded-lg">
             <h1 className="text-4xl text-center py-8">Sign Up</h1>
             <form onSubmit={handleSubmit} className=" flex flex-col pb-10 justify-center items-center">
