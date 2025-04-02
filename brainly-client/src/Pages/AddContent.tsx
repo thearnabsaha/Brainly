@@ -1,21 +1,45 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import Button from "../Components/Button"
 import Input from "../Components/Input"
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import {useSetRecoilState } from "recoil";
+import { refreshAtom } from "../store/atoms";
 type AddContentProps = {
   isOpen: boolean;
   changeOpen: (open: boolean) => void;
 };
 
 const AddContent:React.FC<AddContentProps> = ({isOpen,changeOpen}) => {
-  
+  const setRefresh=useSetRecoilState(refreshAtom)
+  const navigate=useNavigate()
   const [data, setData] = useState({title:"",link:""})
+  const token=localStorage.getItem('token')
+  useEffect(() => {
+    if(!token){
+      navigate('/')
+      return
+    }
+  }, [token])
+  
   const handleChange=(e:React.ChangeEvent<HTMLInputElement>)=>{
     setData({...data,[e.target.name]:e.target.value})
   }
   const handleSubmit=(e:React.FormEvent<HTMLFormElement>)=>{
     e.preventDefault()
-    console.log(data.link+" "+data.title)
+    if(!token){
+      toast.error("Authentication Error")
+      return;
+    }
+    axios.post('/api/content',{...data},{
+      headers:{
+        token:JSON.parse(token)
+      }
+    })
+    .catch((res)=>console.log(res))
     setData({title:"",link:""})
+    setRefresh(true)
     changeOpen(!isOpen)
   }
   const onClose=()=>{

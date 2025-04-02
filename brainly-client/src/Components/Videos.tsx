@@ -6,36 +6,6 @@ import { useEffect, useState } from "react";
 import axios, { AxiosResponse } from "axios";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { refreshAtom } from "../store/atoms";
-// const data = [
-//   {
-//     id: 1,
-//     title: "How to Stay Productive",
-//     link: "https://www.youtube.com/embed/BLUwJHXaK0A?si=dUTIZcDbZsgctIoB",
-//     tags: ["productivity", "focus", "self-improvement", "arnab", "thearnabsaha"],
-//     date: "2025-12-12"
-//   },
-//   {
-//     id: 2,
-//     title: "Latest Tech Trends",
-//     link: "https://x.com/TheArnabSaha/status/1886386240431468953",
-//     tags: ["technology", "innovation", "AI", "arnab", "thearnabsaha"],
-//     date: "2025-12-12"
-//   },
-//   {
-//     id: 3,
-//     title: "Deep Work Techniques",
-//     link: "https://www.youtube.com/watch?v=IhFtf2uHjFk",
-//     tags: ["focus", "deep work", "self-discipline", "arnab", "thearnabsaha"],
-//     date: "2025-12-12"
-//   },
-//   {
-//     id: 4,
-//     title: "Time Management Tips",
-//     link: "https://twitter.com/TheArnabSaha/status/1886386240431468953",
-//     tags: ["time management", "productivity", "self-improvement", "arnab", "thearnabsaha"],
-//     date: "2025-12-12"
-//   }
-// ];
 interface cardData {
   _id:string,
   title:string,
@@ -43,13 +13,17 @@ interface cardData {
   createdAt:string,
   tags:string[]
 }
-const Dashboard = () => {
+const Videos = () => {
   const token=localStorage.getItem('token')
   const navigate=useNavigate()
   const [data, setData] = useState<cardData[]>([])
   const refresh = useRecoilValue(refreshAtom);
   const setRefresh = useSetRecoilState(refreshAtom);
   const handleResponse=(res:AxiosResponse)=>{
+    // res.data.contents.filter((e:any)=>console.log(e.link.includes("x.com") || e.link.includes("twitter.com") ))
+    // console.log(res.data.contents);
+    
+
     setData(res.data.contents)
   }
   useEffect(() => {
@@ -70,6 +44,15 @@ const Dashboard = () => {
     const date = new Date(isoString);
     return date.toLocaleDateString("en-GB");
   };
+  let videos:cardData[]=[]
+  data.filter((e)=>{
+    if(e.link.includes("youtube.com")){
+        videos.push(e)
+    }
+    console.log(videos);
+    return videos
+  })
+
   return (
     <div className="w-screen h-screen bg-gray-200 flex relative">
         <Sidebar/>
@@ -77,7 +60,7 @@ const Dashboard = () => {
             <Navbar/>
             <div className="w-full bg-ppurple-100 h-full flex px-20 pt-10 gap-10 flex-wrap justify-center overflow-auto pb-16">
                 {
-                    data.map((e)=>{
+                    videos.map((e)=>{
                         return(
                           <Card title={e.title} link={e.link} date={formatDate(e.createdAt)} tags={e.tags} id={e._id} key={e._id}/>
                         )
@@ -89,4 +72,4 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard
+export default Videos

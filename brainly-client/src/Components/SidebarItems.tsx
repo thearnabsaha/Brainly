@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 interface sidebarItemsInterface{
     text:string,
-    icon:ReactElement
+    icon:ReactElement,
 }
 const SidebarItems = ({text,icon}:sidebarItemsInterface) => {
   return (

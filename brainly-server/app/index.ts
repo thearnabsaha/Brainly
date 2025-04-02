@@ -131,7 +131,7 @@ app.delete('/content', jwtAuth,async (req, res) => {
 });
 app.delete('/content/:id', jwtAuth,async (req, res) => {
     try {
-        await Content.deleteOne({_id:req.params.id,title:req.id})
+        await Content.deleteOne({_id:req.params.id,createdBy:req.id})
         res.send("Selected Content Deleted")
     } catch (error) {
         console.log(error);
