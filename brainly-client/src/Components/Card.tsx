@@ -62,7 +62,7 @@ const Card = ({id,title,link,tags,date}:cardInterface) => {
                             </div>
                         }
                         {
-                                 !youtube&&!twitter&&<a href={`${link}`} className=" text-ppurple-600 mx-4 inline-block my-2" target="_blank">Your Link</a>
+                            !youtube&&!twitter&&<a href={`${link}`} className=" text-ppurple-600 mx-4 inline-block my-2" target="_blank">Your Link</a>
                         }
                         {
                             !youtube&&!twitter&&<iframe src={`${link}`} className="w-full h-[250px]"></iframe>
