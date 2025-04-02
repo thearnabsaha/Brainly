@@ -61,6 +61,12 @@ const Card = ({id,title,link,tags,date}:cardInterface) => {
                         <iframe className=" w-full h-60 px-5 pb-2 rounded-lg" width="560" height="315" src={(nlink)} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
                             </div>
                         }
+                        {
+                                 !youtube&&!twitter&&<a href={`${link}`} className=" text-ppurple-600 mx-4 inline-block my-2" target="_blank">Your Link</a>
+                        }
+                        {
+                            !youtube&&!twitter&&<iframe src={`${link}`} className="w-full h-[250px]"></iframe>
+                        }
                         <div className="flex flex-wrap">
                             {
                                 tags.map((e)=>{
