@@ -20,10 +20,6 @@ const Videos = () => {
   const refresh = useRecoilValue(refreshAtom);
   const setRefresh = useSetRecoilState(refreshAtom);
   const handleResponse=(res:AxiosResponse)=>{
-    // res.data.contents.filter((e:any)=>console.log(e.link.includes("x.com") || e.link.includes("twitter.com") ))
-    // console.log(res.data.contents);
-    
-
     setData(res.data.contents)
   }
   useEffect(() => {
@@ -49,7 +45,6 @@ const Videos = () => {
     if(e.link.includes("youtube.com")){
         videos.push(e)
     }
-    console.log(videos);
     return videos
   })
 

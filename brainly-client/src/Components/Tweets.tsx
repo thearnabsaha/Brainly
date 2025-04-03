@@ -49,7 +49,6 @@ const Tweets = () => {
     if(e.link.includes("x.com") || e.link.includes("twitter.com")){
         tweets.push(e)
     }
-    console.log(tweets);
     return tweets
   })
 
