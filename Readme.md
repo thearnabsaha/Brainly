@@ -160,9 +160,3 @@ brainly-server/
 - Enhance error handling and logging.
 - Integrate client and server for seamless communication.
 - Add more filters and sorting options for content.
-
----
-
-## License
-
-This project is licensed under the MIT License.
