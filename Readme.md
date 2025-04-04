@@ -2,7 +2,7 @@
 
 ## Overview
 
-Brainly is a full-stack application designed to manage and share content such as tweets, videos, and links. The project consists of a **client** built with React, TypeScript, and TailwindCSS, and a **server** built with Node.js, Express, and MongoDB.
+Brainly is a full-stack application designed to manage and share content such as tweets, videos, and links. The project consists of a **client** built with React, TypeScript, and TailwindCSS, and a **server** built with Node.js, Express, and MongoDB. Additionally, a new type of client has been added to enhance the user experience.
 
 ---
 
@@ -17,6 +17,7 @@ Brainly is a full-stack application designed to manage and share content such as
 - **Responsive UI**: Built with TailwindCSS for a modern and responsive design.
 - **State Management**: Uses Recoil for global state management.
 - **Toast Notifications**: Provides feedback for user actions using `react-hot-toast`.
+- **New Client Type**: Introduced to improve functionality and user interaction.
 
 ### Server
 
