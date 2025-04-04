@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom"
 const items = [
     {
       title: "Dashboard",
-      url: "/user/dashboard",
+      url: "/user",
       icon: LuLayoutGrid,
     },
     {

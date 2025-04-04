@@ -1,4 +1,4 @@
-import { ThemeProvider } from "@/components/theme-provider"
+import { ThemeProvider } from "@/components/ui/theme/theme-provider"
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/MainLayout";
 import Creadentials from "./pages/Creadentials";
