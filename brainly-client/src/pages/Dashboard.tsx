@@ -4,52 +4,36 @@ import { MdOutlineDelete } from "react-icons/md";
 import { GoShareAndroid } from "react-icons/go";
 import { FaYoutube,FaTwitter } from "react-icons/fa";
 import { HiOutlineDocument } from "react-icons/hi";
-// import { useEffect, useState } from "react";
-
-const data = [
-  {
-    title: "Elon Musk talks AI and the future",
-    link: "https://x.com/nirbhay_74/status/1907712493612331346",
-    tags: ["AI", "technology", "Elon Musk", "future"],
-    date: "2025-03-15"
-  },
-  {
-    title: "MrBeast - Giving Away $1,000,000!",
-    link: "https://www.youtube.com/watch?v=xUNqsfFUwhY",
-    tags: ["YouTube", "MrBeast", "giveaway", "viral"],
-    date: "2025-03-10"
-  },
-  {
-    title: "Naval Ravikant on wealth and happiness",
-    link: "https://x.com/nirbhay_74/status/1907712493612331346",
-    tags: ["Naval", "philosophy", "wealth", "mindset"],
-    date: "2025-03-05"
-  },
-  {
-    title: "Ali Abdaal - How to Study for Exams",
-    link: "https://www.youtube.com/watch?v=ukLnPbIffxE",
-    tags: ["study", "productivity", "Ali Abdaal", "tips"],
-    date: "2025-02-28"
-  },
-  {
-    title: "Grevelops Website",
-    link: "https://grevelops.co",
-    tags: ["study", "productivity", "Ali Abdaal", "tips"],
-    date: "2025-02-28"
-  }
-];
-
-
-
-const Dashboard = () => {
-  // const [data, setdata] = useState([{title:"",link:"",tags:[],date:""}])
+import { useEffect, useState } from "react";
+import axios from "axios";
+interface dataInterface{
+  _id:string,
+  title:string,
+  link:string,
+  tags:string[],
+  createdAt:string,
+}
+const Dashboard = ()=> {
+  const [data, setData] = useState<any>([])
   useEffect(() => {
-    
+    const token=localStorage.getItem('token')
+    if(!token){
+      return;
+    }
+    axios.get("/api/content",{headers:{token:JSON.parse(token)}})
+    .then((res)=>{
+      setData([...res.data.contents])
+    })
+    .catch((res)=>console.log(res))
   }, [])
+  const formatDate = (isoString: string): string => {
+    const date = new Date(isoString);
+    return date.toLocaleDateString("en-GB");
+  };
   return (
     <div className="flex justify-start mt-5 w-[75vw] h-screen m-auto flex-wrap">
       {
-        data.map((e)=>{
+        data.map((e:dataInterface)=>{
           const youtube=e.link.includes("youtube.com")
           const twitter=e.link.includes("twitter.com") || e.link.includes("x.com") 
           function convertToEmbedUrl(youtubeUrl: string){
@@ -61,9 +45,8 @@ const Dashboard = () => {
             
           }
           const nlink=convertToEmbedUrl(e.link)
-          console.log(e.link.replace("x.com","twitter.com"))
           return(
-            <Card className=" w-96 h-[480px] overflow-auto m-3">
+            <Card className=" w-96 h-[480px] overflow-auto m-3" key={e._id}>
               <CardHeader>
                 <CardTitle className="flex justify-around items-center">
                   <div className="flex">
@@ -103,18 +86,17 @@ const Dashboard = () => {
               </CardHeader>
               <CardContent>
                 {
-                  e.tags.map((e)=>{
+                  e.tags.map((i)=>{
                     return(
-                      <Badge className="m-2">#{e}</Badge>
+                      <Badge className="m-2" key={e._id+i}>#{i}</Badge>
                     )
                   })
                 }
               </CardContent>
               <CardFooter>
-                <p>Added on {e.date}</p>
+                <p>Added on {formatDate(e.createdAt)}</p>
               </CardFooter>
             </Card>
-
             )
             })
             }

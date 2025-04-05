@@ -37,7 +37,7 @@ const Credentials = () => {
   }
   const submitHandler2=()=>{
     axios.post("api/signin",{...inputValue2})
-    .then((res)=>handleToast(res))
+    .then((res)=>localStorage.setItem('token',JSON.stringify(res.data.token)))
     .catch((res)=>handleToast(res))
     setInputValue2({username:"",password:""})
     navigate('/user')
