@@ -68,7 +68,7 @@ app.post('/signin', async (req, res) => {
         if(user){
             const matched=await bcrypt.compare(req.body.password,user.password)
             if(matched){
-                const token =jwt.sign({id:user._id}, String(process.env.JWT_SECRET_KEY), { expiresIn: '1h' });
+                const token =jwt.sign({id:user._id}, String(process.env.JWT_SECRET_KEY as string), { expiresIn: '1h' });
                 res.status(200).json({"token":token})
             }else{
                 res.status(400).send("invalid credentials")
