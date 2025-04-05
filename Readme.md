@@ -17,6 +17,7 @@ Brainly is a full-stack application designed to manage and share content such as
 - **Responsive UI**: Built with TailwindCSS for a modern and responsive design.
 - **State Management**: Uses Recoil for global state management.
 - **Toast Notifications**: Provides feedback for user actions using `react-hot-toast`.
+- **Dark Mode**: Toggle between light and dark themes.
 - **New Client Type**: Introduced to improve functionality and user interaction.
 
 ### Server
@@ -26,6 +27,7 @@ Brainly is a full-stack application designed to manage and share content such as
   - Create, retrieve, update, and delete content.
 - **Validation**: Input validation using `zod`.
 - **Database**: MongoDB for storing user and content data.
+- **Error Handling**: Improved error handling for better debugging.
 
 ---
 
@@ -77,7 +79,7 @@ brainly-client/
 ```
 brainly-server/
 ├── app/
-│   ├── controller/        # Placeholder for controllers
+│   ├── controller/        # Controllers for handling requests
 │   ├── database/          # Database connection
 │   ├── jwt/               # JWT authentication middleware
 │   ├── model/             # Mongoose models
@@ -144,6 +146,7 @@ brainly-server/
 
    ```
    JWT_SECRET_KEY="your_secret_key"
+   MONGODB_URI="your_mongo_db_url"
    ```
 
 4. Start the server:
@@ -161,3 +164,4 @@ brainly-server/
 - Enhance error handling and logging.
 - Integrate client and server for seamless communication.
 - Add more filters and sorting options for content.
+- Improve UI/UX for better user interaction.
