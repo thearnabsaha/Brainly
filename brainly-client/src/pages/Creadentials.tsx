@@ -28,28 +28,35 @@ const Credentials = () => {
     }
   }, [token])
   const navigate=useNavigate()
-  const handleToast=(res:AxiosResponse)=>{
+  const handleToastSignup=(res:AxiosResponse)=>{
+    res.status==200&&toast.success('Signup Successful')
+    res.status==400&&toast.error('Bad Resquest')
+    res.status==404&&toast.error("Route doesn't exist Successful")
+    res.status==409&&toast.error("User Already Exists")
+    res.status==500&&toast.error('Internal Error')
+  }
+  const handleToastSignin=(res:AxiosResponse)=>{
     res.status==200&&toast.success('Signup Successful')
     res.status==400&&toast.error('Bad Resquest')
     res.status==404&&toast.error("Route doesn't exist Successful")
     res.status==409&&toast.error("User Already Exists")
     res.status==500&&toast.error('Internal Error')
     if(res.status==200){
-      toast.success("User Signup Successful")
+      toast.success("User Signin Successful")
       localStorage.setItem('token', JSON.stringify(res.data.token));
       navigate("/user")
     }
   }
   const submitHandler=()=>{
     axios.post("api/signup",{...inputValue})
-    .then((res)=>handleToast(res))
-    .catch((res)=>handleToast(res))
+    .then((res)=>handleToastSignup(res))
+    .catch((res)=>handleToastSignup(res))
     setInputValue({username:"",password:"",email:""})
   }
   const submitHandler2=()=>{
     axios.post("api/signin",{...inputValue2})
-    .then(handleToast)
-    .catch((res)=>handleToast(res))
+    .then(handleToastSignin)
+    .catch((res)=>handleToastSignin(res))
     setInputValue2({username:"",password:""})
   }
   

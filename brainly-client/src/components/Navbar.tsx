@@ -18,6 +18,12 @@ const Navbar = () => {
     return
   }
   const submithandler=()=>{
+    if(tagValue){
+      const newtags=[...tags,tagValue.trim()]
+      setTags(newtags)
+      setInputValue({...inputValue,tags:newtags})
+      setTagValue("")
+    }
     axios.post('/api/content',{...inputValue},{headers:{token:JSON.parse(token)}})
     .then()
     .catch((res)=>console.log(res))  
@@ -27,13 +33,19 @@ const Navbar = () => {
   }
   const handleTags=(e: React.KeyboardEvent<HTMLInputElement>)=>{
     if(e.key==="Enter"){
+      if(tagValue){
         const newtags=[...tags,tagValue.trim()]
-      setTags(newtags)
-      setInputValue({...inputValue,tags:newtags})
-      setTagValue("")
+        setTags(newtags)
+        setInputValue({...inputValue,tags:newtags})
+        setTagValue("")
+      }
     }
   }
-
+  const handleFilterTags=(e:string)=>{
+    const newtags=tags.filter((i)=>i!==e)
+    setTags(newtags)
+    setInputValue({...inputValue,tags:newtags})
+  }
   return (
     <div className="flex justify-between px-10 py-5 items-center">
       <Sidebar/>
@@ -52,7 +64,7 @@ const Navbar = () => {
                   <div className="h-[300px] border my-4 overflow-x-hidden w-[470px] overflow-y-scroll">
                     {tags.map((e)=>{
                       return(
-                        <Badge className="m-2">{e} <span className="text-red-500 text-lg" onClick={()=>setTags(tags.filter((i)=>i!==e))}>x</span> </Badge>
+                        <Badge className="m-2">{e} <span className="text-red-500 text-lg" onClick={()=>handleFilterTags(e)}>x</span> </Badge>
                       )
                     })}
                   </div>

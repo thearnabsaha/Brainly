@@ -43,7 +43,7 @@ const Dashboard = ()=> {
     return date.toLocaleDateString("en-GB");
   };
   return (
-    <div className="flex justify-start mt-5 w-[75vw] h-screen m-auto flex-wrap">
+    <div className="flex justify-start mt-5 w-[75vw] mb-5 m-auto flex-wrap">
       {
         data.map((e:dataInterface)=>{
           const youtube=e.link.includes("youtube.com")
@@ -87,7 +87,7 @@ const Dashboard = ()=> {
                 }
                 {
                     youtube&&<div className=" rounded-lg">
-                <iframe className=" w-full h-60 px-5 pb-2 rounded-lg" width="560" height="315" src={(nlink)} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+                <iframe className=" w-full h-60 px-5 pb-2 rounded-lg mt-5" width="560" height="315" src={(nlink)} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
                     </div>
                 }
                 {
