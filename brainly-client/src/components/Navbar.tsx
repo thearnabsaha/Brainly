@@ -3,33 +3,39 @@ import { Button } from "./ui/button"
 import { ModeToggle } from "./ui/theme/mode-toggle"
 import { DialogHeader,Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "./ui/dialog"
 import { Input } from "./ui/input"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Badge } from "./ui/badge"
 import { inputValueState, tagsState } from "@/store/atoms"
 import { useRecoilState } from "recoil"
-// interface inputs{
-//   title: string
-//   link: string
-//   tags:string[]
-// }
+import axios from "axios"
+
 const Navbar = () => {
   const [inputValue, setInputValue] = useRecoilState(inputValueState);
   const [tags, setTags] = useRecoilState(tagsState);
   const [tagValue, setTagValue] = useState("")
+  const token=localStorage.getItem('token')
+  if(!token){
+    return
+  }
   const submithandler=()=>{
-    console.log(inputValue);
+    axios.post('/api/content',{...inputValue},{headers:{token:JSON.parse(token)}})
+    .then()
+    .catch((res)=>console.log(res))  
     setInputValue({title:"",link:"",tags:[]})
     setTags([])
+    window.location.reload(); 
   }
   const handleTags=(e: React.KeyboardEvent<HTMLInputElement>)=>{
     if(e.key==="Enter"){
-      tagValue&&setTags([...tags,tagValue])
-      setInputValue({...inputValue,tags:tags})
+        const newtags=[...tags,tagValue.trim()]
+      setTags(newtags)
+      setInputValue({...inputValue,tags:newtags})
       setTagValue("")
     }
   }
+
   return (
-    <div className="flex justify-between px-10 py-2 bg-accent items-center">
+    <div className="flex justify-between px-10 py-5 items-center">
       <Sidebar/>
       <div className="mr-10 flex items-center">
         <Button className="mx-1 rounded-sm cursor-pointer">Share</Button>

@@ -13,21 +13,32 @@ import {
     TabsList,
     TabsTrigger,
 } from "@/components/ui/tabs"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, {AxiosResponse } from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 
 const Credentials = () => {
   const [inputValue, setInputValue] = useState({username:"",password:"",email:""})
   const [inputValue2, setInputValue2] = useState({username:"",password:""})
+  const token=localStorage.getItem('token')
+  useEffect(() => {
+    if(token){
+      navigate('/user')
+    }
+  }, [token])
   const navigate=useNavigate()
-  const handleToast=(res:AxiosResponse|AxiosError)=>{
+  const handleToast=(res:AxiosResponse)=>{
     res.status==200&&toast.success('Signup Successful')
     res.status==400&&toast.error('Bad Resquest')
     res.status==404&&toast.error("Route doesn't exist Successful")
     res.status==409&&toast.error("User Already Exists")
     res.status==500&&toast.error('Internal Error')
+    if(res.status==200){
+      toast.success("User Signup Successful")
+      localStorage.setItem('token', JSON.stringify(res.data.token));
+      navigate("/user")
+    }
   }
   const submitHandler=()=>{
     axios.post("api/signup",{...inputValue})
@@ -37,11 +48,11 @@ const Credentials = () => {
   }
   const submitHandler2=()=>{
     axios.post("api/signin",{...inputValue2})
-    .then((res)=>localStorage.setItem('token',JSON.stringify(res.data.token)))
+    .then(handleToast)
     .catch((res)=>handleToast(res))
     setInputValue2({username:"",password:""})
-    navigate('/user')
   }
+  
   return (
     <div className="h-screen w-screen flex justify-center items-center">
       <Toaster position="top-right" reverseOrder={false} />
@@ -63,7 +74,7 @@ const Credentials = () => {
               <Input type="text" placeholder="username" value={inputValue.username} onChange={(e)=>setInputValue({...inputValue,username:e.target.value})}/>
               <Input type="email" placeholder="email" value={inputValue.email} onChange={(e)=>setInputValue({...inputValue,email:e.target.value})}/>
               <Input type="password" placeholder="password" value={inputValue.password} onChange={(e)=>setInputValue({...inputValue,password:e.target.value})}/>
-              <Button onClick={submitHandler} disabled={!inputValue.username||!inputValue.email||!inputValue.password}>Sign Up</Button>
+              <Button onClick={submitHandler} disabled={!inputValue.username||!inputValue.email||!inputValue.password} className=" cursor-pointer">Sign Up</Button>
             </CardContent>
           </Card>
         </TabsContent>
@@ -79,7 +90,7 @@ const Credentials = () => {
             <CardContent className="space-y-4">
               <Input type="text" placeholder="username" value={inputValue2.username} onChange={(e)=>setInputValue2({...inputValue2,username:e.target.value})}/>
               <Input type="password" placeholder="password" value={inputValue2.password} onChange={(e)=>setInputValue2({...inputValue2,password:e.target.value})}/>
-              <Button onClick={submitHandler2} disabled={!inputValue2.username||!inputValue2.password}>Sign Up</Button>
+              <Button onClick={submitHandler2} disabled={!inputValue2.username||!inputValue2.password} className=" cursor-pointer">Sign Up</Button>
             </CardContent>
           </Card>
         </TabsContent>

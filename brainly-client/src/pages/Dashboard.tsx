@@ -6,6 +6,7 @@ import { FaYoutube,FaTwitter } from "react-icons/fa";
 import { HiOutlineDocument } from "react-icons/hi";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 interface dataInterface{
   _id:string,
   title:string,
@@ -14,10 +15,21 @@ interface dataInterface{
   createdAt:string,
 }
 const Dashboard = ()=> {
+  const token=localStorage.getItem('token')
+  const navigate=useNavigate()
   const [data, setData] = useState<any>([])
-  useEffect(() => {
-    const token=localStorage.getItem('token')
+  const deleteContent=(id:string)=>{
     if(!token){
+      return;
+    }
+    axios.delete(`/api/content/${id}`,{headers:{token:JSON.parse(token)}})
+    .then((res)=>console.log(res))
+    .catch((res)=>console.log(res))
+    window.location.reload(); 
+  }
+  useEffect(() => {
+    if(!token){
+      navigate('/')
       return;
     }
     axios.get("/api/content",{headers:{token:JSON.parse(token)}})
@@ -25,7 +37,7 @@ const Dashboard = ()=> {
       setData([...res.data.contents])
     })
     .catch((res)=>console.log(res))
-  }, [])
+  }, [token])
   const formatDate = (isoString: string): string => {
     const date = new Date(isoString);
     return date.toLocaleDateString("en-GB");
@@ -62,7 +74,8 @@ const Dashboard = ()=> {
                   </div>
                   <p className=" text-center p-1">{e.title}</p>
                   <div className="flex">
-                  <GoShareAndroid className="text-2xl mr-2 cursor-pointer"/> <MdOutlineDelete className="text-2xl ml-2 cursor-pointer"/>
+                  <GoShareAndroid className="text-2xl mr-2 cursor-pointer"/>
+                  <MdOutlineDelete className="text-2xl ml-2 cursor-pointer" onClick={()=>deleteContent(e._id)}/>
                   </div>
                   </CardTitle>
                 {
