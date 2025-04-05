@@ -53,9 +53,3 @@ export const userSignin= async (req:Request, res:Response) => {
         res.send(error);
     }
 };
-// app.post('/share', jwtAuth,(req, res) => {
-//     res.send('hello from simple server :)');
-// });
-// app.post('/share/:id', jwtAuth,(req, res) => {
-//     res.send('hello from simple server :)');
-// });
