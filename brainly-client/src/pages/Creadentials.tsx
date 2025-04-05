@@ -6,13 +6,6 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
-import {
-    FormControl,
-    FormField,
-    FormItem,
-    FormMessage,
-    Form,
-} from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import {
     Tabs,
@@ -20,8 +13,9 @@ import {
     TabsList,
     TabsTrigger,
 } from "@/components/ui/tabs"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+
 import { z } from "zod"
 
 const formSchema = z.object({
@@ -37,17 +31,18 @@ const formSchema = z.object({
 });
 
 const Credentials = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      username: "",
-    },
-  })
-
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
-  }
-
+const [inputValue, setInputValue] = useState({username:"",password:"",email:""})
+const [inputValue2, setInputValue2] = useState({username:"",password:""})
+const navigate=useNavigate()
+const submitHandler=()=>{
+  console.log(inputValue)
+  setInputValue({username:"",password:"",email:""})
+}
+const submitHandler2=()=>{
+  console.log(inputValue2)
+  setInputValue2({username:"",password:""})
+  navigate('/user')
+}
   return (
     <div className="h-screen w-screen flex justify-center items-center">
       <Tabs defaultValue="Signup" className="w-[400px]">
@@ -64,45 +59,11 @@ const Credentials = () => {
                 Save, organize, and access your links anywhere, anytime.
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-2">
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-                  <FormField control={form.control}
-                    name="username"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <Input placeholder="username" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <Input placeholder="email" {...field}/>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField control={form.control}
-                    name="password"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <Input placeholder="password" {...field}/>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <Button type="submit" className=" cursor-pointer rounded-sm">Submit</Button>
-                </form>
-              </Form>
+            <CardContent className="space-y-4">
+              <Input type="text" placeholder="username" value={inputValue.username} onChange={(e)=>setInputValue({...inputValue,username:e.target.value})}/>
+              <Input type="email" placeholder="email" value={inputValue.email} onChange={(e)=>setInputValue({...inputValue,email:e.target.value})}/>
+              <Input type="password" placeholder="password" value={inputValue.password} onChange={(e)=>setInputValue({...inputValue,password:e.target.value})}/>
+              <Button onClick={submitHandler} disabled={!inputValue.username||!inputValue.email||!inputValue.password}>Sign Up</Button>
             </CardContent>
           </Card>
         </TabsContent>
@@ -115,36 +76,10 @@ const Credentials = () => {
                 Welcome back — access your saved links instantly.
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-2">
-                <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-                        <FormField
-                        control={form.control}
-                        name="username"
-                        render={({ field }) => (
-                            <FormItem>
-                            <FormControl>
-                                <Input placeholder="username" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                            </FormItem>
-                        )}
-                        />
-                        <FormField
-                        control={form.control}
-                        name="password"
-                        render={({ field }) => (
-                            <FormItem>
-                            <FormControl>
-                                <Input placeholder="password" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                            </FormItem>
-                        )}
-                        />
-                        <Button type="submit" className=" cursor-pointer rounded-sm">Submit</Button>
-                    </form>
-                </Form>
+            <CardContent className="space-y-4">
+              <Input type="text" placeholder="username" value={inputValue2.username} onChange={(e)=>setInputValue2({...inputValue2,username:e.target.value})}/>
+              <Input type="password" placeholder="password" value={inputValue2.password} onChange={(e)=>setInputValue2({...inputValue2,password:e.target.value})}/>
+              <Button onClick={submitHandler2} disabled={!inputValue2.username||!inputValue2.password}>Sign Up</Button>
             </CardContent>
           </Card>
         </TabsContent>
