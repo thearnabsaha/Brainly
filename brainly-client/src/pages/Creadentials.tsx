@@ -15,36 +15,36 @@ import {
 } from "@/components/ui/tabs"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-
-import { z } from "zod"
-
-const formSchema = z.object({
-  email: z.string().email({ message: 'Invalid email address' }),
-  username: z.string().min(3, { message: 'Username must be at least 3 characters long' }),
-  password: z
-    .string()
-    .min(8, { message: 'Password must be at least 8 characters long' })
-    .regex(/[A-Z]/, { message: 'Password must contain at least one uppercase letter' })
-    .regex(/[a-z]/, { message: 'Password must contain at least one lowercase letter' })
-    .regex(/[0-9]/, { message: 'Password must contain at least one number' })
-    .regex(/[@$!%*?&]/, { message: 'Password must contain at least one special character' }),
-});
+import axios, { AxiosError, AxiosResponse } from 'axios';
+import toast, { Toaster } from 'react-hot-toast';
 
 const Credentials = () => {
-const [inputValue, setInputValue] = useState({username:"",password:"",email:""})
-const [inputValue2, setInputValue2] = useState({username:"",password:""})
-const navigate=useNavigate()
-const submitHandler=()=>{
-  console.log(inputValue)
-  setInputValue({username:"",password:"",email:""})
-}
-const submitHandler2=()=>{
-  console.log(inputValue2)
-  setInputValue2({username:"",password:""})
-  navigate('/user')
-}
+  const [inputValue, setInputValue] = useState({username:"",password:"",email:""})
+  const [inputValue2, setInputValue2] = useState({username:"",password:""})
+  const navigate=useNavigate()
+  const handleToast=(res:AxiosResponse|AxiosError)=>{
+    res.status==200&&toast.success('Signup Successful')
+    res.status==400&&toast.error('Bad Resquest')
+    res.status==404&&toast.error("Route doesn't exist Successful")
+    res.status==409&&toast.error("User Already Exists")
+    res.status==500&&toast.error('Internal Error')
+  }
+  const submitHandler=()=>{
+    axios.post("api/signup",{...inputValue})
+    .then((res)=>handleToast(res))
+    .catch((res)=>handleToast(res))
+    setInputValue({username:"",password:"",email:""})
+  }
+  const submitHandler2=()=>{
+    axios.post("api/signin",{...inputValue2})
+    .then((res)=>handleToast(res))
+    .catch((res)=>handleToast(res))
+    setInputValue2({username:"",password:""})
+    navigate('/user')
+  }
   return (
     <div className="h-screen w-screen flex justify-center items-center">
+      <Toaster position="top-right" reverseOrder={false} />
       <Tabs defaultValue="Signup" className="w-[400px]">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="Signup" className=" cursor-pointer">Sign Up</TabsTrigger>
