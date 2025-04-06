@@ -46,12 +46,21 @@ try {
 }
 })
 app.post("/shareoff",jwtAuth,async (req,res)=>{
-  await Share.deleteMany({createdBy:req.id})
-  res.status(200).json({"isSharing":false})
+  try {
+    await Share.deleteMany({createdBy:req.id})
+    res.status(200).json({"isSharing":false})
+  } catch (error) {
+    res.status(500).send(error)
+  }
 })
 app.get("/share/:id",async (req,res)=>{
-  const shared=await Share.find({slug:req.params.id})
-  const contents=await Content.find({createdBy:shared[0].createdBy})
-  res.status(200).send(contents)
+  try {
+    const shared=await Share.find({slug:req.params.id})
+    const contents=await Content.find({createdBy:shared[0].createdBy})
+    res.status(200).send(contents)
+  } catch (error) {
+    res.status(500).send(error)
+  }
+
 })
 app.listen(port, () => console.log('> Server is up and running on port: ' + port));
