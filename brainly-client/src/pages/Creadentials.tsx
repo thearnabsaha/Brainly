@@ -6,6 +6,13 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import {
     Tabs,
@@ -17,23 +24,69 @@ import {  useState } from "react"
 import { useNavigate } from "react-router-dom"
 import axios, {AxiosResponse } from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
-
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+const signupSchema = z.object({
+  email: z.string().email({ message: 'Invalid email address' }),
+  username: z.string().min(3, { message: 'Username must be at least 3 characters long' }),
+  password: z
+    .string()
+    .min(8, { message: 'Password must be at least 8 characters long' })
+    .regex(/[A-Z]/, { message: 'Password must contain at least one uppercase letter' })
+    .regex(/[a-z]/, { message: 'Password must contain at least one lowercase letter' })
+    .regex(/[0-9]/, { message: 'Password must contain at least one number' })
+    .regex(/[@$!%*?&]/, { message: 'Password must contain at least one special character' }),
+});
+const signinSchema = z.object({
+  username: z.string().min(3, { message: 'Username must be at least 3 characters long' }),
+  password: z
+    .string()
+    .min(8, { message: 'Password must be at least 8 characters long' })
+    .regex(/[A-Z]/, { message: 'Password must contain at least one uppercase letter' })
+    .regex(/[a-z]/, { message: 'Password must contain at least one lowercase letter' })
+    .regex(/[0-9]/, { message: 'Password must contain at least one number' })
+    .regex(/[@$!%*?&]/, { message: 'Password must contain at least one special character' }),
+});
 const Credentials = () => {
-  const [inputValue, setInputValue] = useState({username:"",password:"",email:""})
-  const [inputValue2, setInputValue2] = useState({username:"",password:""})
+  const Signupform = useForm<z.infer<typeof signupSchema>>({
+    resolver: zodResolver(signupSchema),
+    defaultValues: {
+      email: "",
+      username: "",
+      password: "",
+    }
+  })
+ 
+  async function onSubmitSignup(values: z.infer<typeof signupSchema>) {
+    await axios.post("api/signup",{...values})
+    .then((res)=>handleToastSignup(res))
+    .catch((res)=>handleToastSignup(res))
+  }
+
+  const Signinform = useForm<z.infer<typeof signinSchema>>({
+    resolver: zodResolver(signinSchema)
+  })
+ 
+  async function onSubmitSignin(values: z.infer<typeof signinSchema>) {
+    await axios.post("api/signin",{...values})
+    .then(handleToastSignin)
+    .catch((res)=>handleToastSignin(res))
+  }
   const navigate=useNavigate()
   const handleToastSignup=(res:AxiosResponse)=>{
-    res.status==200&&toast.success('Signup Successful')
+    if(res.status==200){
+      toast.success('Signup Successful')
+      Signupform.reset()
+    }
     res.status==400&&toast.error('Bad Resquest')
-    res.status==404&&toast.error("Route doesn't exist Successful")
+    res.status==404&&toast.error("Route doesn't exist")
     res.status==409&&toast.error("User Already Exists")
     res.status==500&&toast.error('Internal Error')
   }
   const handleToastSignin=(res:AxiosResponse)=>{
-    res.status==200&&toast.success('Signup Successful')
     res.status==400&&toast.error('Bad Resquest')
-    res.status==404&&toast.error("Route doesn't exist Successful")
-    res.status==409&&toast.error("User Already Exists")
+    res.status==404&&toast.error("User doesn't exist")
     res.status==500&&toast.error('Internal Error')
     if(res.status==200){
       toast.success("User Signin Successful")
@@ -41,18 +94,7 @@ const Credentials = () => {
       navigate("/user")
     }
   }
-  const submitHandler=()=>{
-    axios.post("api/signup",{...inputValue})
-    .then((res)=>handleToastSignup(res))
-    .catch((res)=>handleToastSignup(res))
-    setInputValue({username:"",password:"",email:""})
-  }
-  const submitHandler2=()=>{
-    axios.post("api/signin",{...inputValue2})
-    .then(handleToastSignin)
-    .catch((res)=>handleToastSignin(res))
-    setInputValue2({username:"",password:""})
-  }
+
   
   return (
     <div className="h-screen w-screen flex justify-center items-center">
@@ -72,10 +114,47 @@ const Credentials = () => {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <Input type="text" placeholder="username" value={inputValue.username} onChange={(e)=>setInputValue({...inputValue,username:e.target.value})}/>
-              <Input type="email" placeholder="email" value={inputValue.email} onChange={(e)=>setInputValue({...inputValue,email:e.target.value})}/>
-              <Input type="password" placeholder="password" value={inputValue.password} onChange={(e)=>setInputValue({...inputValue,password:e.target.value})}/>
-              <Button onClick={submitHandler} disabled={!inputValue.username||!inputValue.email||!inputValue.password} className=" cursor-pointer">Sign Up</Button>
+              <Form {...Signupform}>
+                <form onSubmit={Signupform.handleSubmit(onSubmitSignup)} className="space-y-8">
+                  <FormField
+                    control={Signupform.control}
+                    name="username"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Input placeholder="Username" type="text" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={Signupform.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Input placeholder="Email" type="email" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={Signupform.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Input placeholder="Password" type="password" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <Button type="submit" className=" cursor-pointer">Submit</Button>
+                </form>
+              </Form>
             </CardContent>
           </Card>
         </TabsContent>
@@ -89,9 +168,35 @@ const Credentials = () => {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <Input type="text" placeholder="username" value={inputValue2.username} onChange={(e)=>setInputValue2({...inputValue2,username:e.target.value})}/>
-              <Input type="password" placeholder="password" value={inputValue2.password} onChange={(e)=>setInputValue2({...inputValue2,password:e.target.value})}/>
-              <Button onClick={submitHandler2} disabled={!inputValue2.username||!inputValue2.password} className=" cursor-pointer">Sign Up</Button>
+              <Form {...Signinform}>
+                <form onSubmit={Signinform.handleSubmit(onSubmitSignin)} className="space-y-8">
+                  <FormField
+                    control={Signinform.control}
+                    name="username"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Input placeholder="username" type="text" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={Signinform.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Input placeholder="Password" type="password" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <Button type="submit" className=" cursor-pointer">Submit</Button>
+                </form>
+              </Form>
             </CardContent>
           </Card>
         </TabsContent>
