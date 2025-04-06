@@ -1,8 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { MdOutlineDelete } from "react-icons/md";
-import { GoShareAndroid } from "react-icons/go";
-import { FaYoutube,FaTwitter } from "react-icons/fa";
+import { MdOutlineContentCopy, MdOutlineDelete } from "react-icons/md";
+import { FaYoutube,FaTwitter, FaCheck } from "react-icons/fa";
 import { HiOutlineDocument } from "react-icons/hi";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -18,6 +17,14 @@ const Dashboard = ()=> {
   const token=localStorage.getItem('token')
   const navigate=useNavigate()
   const [data, setData] = useState<any>([])
+  const [copied, setCopied] = useState(false)
+  const copyHandler=(link:string)=>{
+    navigator.clipboard.writeText(link)
+    setTimeout(() => {
+      setCopied(false)
+    }, 2000);
+    setCopied(true)
+  }
   const deleteContent=(id:string)=>{
     if(!token){
       return;
@@ -74,7 +81,7 @@ const Dashboard = ()=> {
                   </div>
                   <p className=" text-center p-1">{e.title}</p>
                   <div className="flex">
-                  <GoShareAndroid className="text-2xl mr-2 cursor-pointer"/>
+                  <MdOutlineContentCopy className="text-2xl duration-500 ease-in-out cursor-pointer" onClick={()=>copyHandler(e.link)}/>
                   <MdOutlineDelete className="text-2xl ml-2 cursor-pointer" onClick={()=>deleteContent(e._id)}/>
                   </div>
                   </CardTitle>

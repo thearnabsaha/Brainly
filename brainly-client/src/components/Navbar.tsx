@@ -17,8 +17,8 @@ const Navbar = () => {
   const [tags, setTags] = useRecoilState(tagsState);
   const [tagValue, setTagValue] = useState("")
   const [copied, setCopied] = useState(false)
-  const [sharedLink, setSharedLink] = useState('http://localhost:5173/user')
-  const [sharable, setSharable] = useState(true)
+  const [sharedLink, setSharedLink] = useState('')
+  const [sharable, setSharable] = useState(false)
   const token=localStorage.getItem('token')
   if(!token){
     return
@@ -60,8 +60,21 @@ const Navbar = () => {
     setCopied(true)
   }
   const checkedChangedHandler=()=>{
-    setSharable(prev=>!prev)
-    console.log(sharable);
+    if(!sharable){
+      axios.post("/api/shareon",{},{headers:{token:JSON.parse(token)}})
+      .then((res)=>{
+        setSharedLink("http://localhost:5173/share/"+res.data.slug)
+        setSharable(res.data.isSharing)
+      })
+      .catch((res)=>console.log(res));
+    }else{
+        axios.post("/api/shareoff",{},{headers:{token:JSON.parse(token)}})
+        .then((res)=>{
+          setSharedLink("")
+          setSharable(res.data.isSharing)
+        })
+        .catch((res)=>console.log(res));
+    }
   }
   return (
     <div className="flex justify-between px-10 py-5 items-center">
@@ -76,7 +89,10 @@ const Navbar = () => {
               <DialogTitle className="text-3xl">Your Sharable Link</DialogTitle>
               <DialogDescription>
               <h1 className="flex items-center">Do You Want to Share all Your Links<Switch onCheckedChange={checkedChangedHandler} className="ml-5"/></h1>
-                <h1 className=" border py-3 px-10 bg-accent flex justify-between text-xl items-center my-5 rounded-sm">{sharedLink} <Button className=" cursor-pointer" onClick={copyHandler}>{copied?<FaCheck className="text-2xl duration-500 ease-in-out"/>:<MdOutlineContentCopy className="text-2xl duration-500 ease-in-out"/>}</Button></h1>
+                {sharable&&<div className=" flex justify-between my-5 items-center ">
+                  <h1 className=" border py-3 px-10 bg-accent my-5 rounded-sm overflow-x-hidden w-96">{sharedLink}</h1>
+                <Button className=" cursor-pointer" onClick={copyHandler}>{copied?<FaCheck className="text-2xl duration-500 ease-in-out"/>:<MdOutlineContentCopy className="text-2xl duration-500 ease-in-out"/>}</Button>
+                  </div>}
               </DialogDescription>
             </DialogHeader>
           </DialogContent>
