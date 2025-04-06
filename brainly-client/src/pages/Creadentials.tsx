@@ -13,7 +13,7 @@ import {
     TabsList,
     TabsTrigger,
 } from "@/components/ui/tabs"
-import { useEffect, useState } from "react"
+import {  useState } from "react"
 import { useNavigate } from "react-router-dom"
 import axios, {AxiosResponse } from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
@@ -21,12 +21,6 @@ import toast, { Toaster } from 'react-hot-toast';
 const Credentials = () => {
   const [inputValue, setInputValue] = useState({username:"",password:"",email:""})
   const [inputValue2, setInputValue2] = useState({username:"",password:""})
-  const token=localStorage.getItem('token')
-  useEffect(() => {
-    if(token){
-      navigate('/user')
-    }
-  }, [token])
   const navigate=useNavigate()
   const handleToastSignup=(res:AxiosResponse)=>{
     res.status==200&&toast.success('Signup Successful')

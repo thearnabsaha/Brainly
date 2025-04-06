@@ -58,7 +58,7 @@ const Videos = () => {
             return(
                 <div>
                     {
-                        youtube&&              <Card className=" w-96 h-[480px] overflow-auto m-3" key={e._id}>
+                        youtube&&<Card className=" w-96 h-[480px] overflow-auto m-3" key={e._id}>
                         <CardHeader>
                           <CardTitle className="flex justify-around items-center">
                             <div className="flex">
