@@ -9,6 +9,11 @@ import morgan from 'morgan';
 import connectDB from './database/db';
 import userRoutes from './routes/user.routes'
 import contentRoutes from './routes/content.routes'
+import { jwtAuth } from './jwt/jwtAuth';
+import { Content } from './model/ContentModel';
+import { User } from './model/UserModel';
+import { v4 as uuidv4 } from 'uuid';
+import { Share } from './model/ShareModel';
 const morganFormat = ':method :url :status :response-time ms';
 
 app.use(
@@ -26,4 +31,27 @@ app.use(cookieParser());
 connectDB()
 app.use('/',userRoutes);
 app.use('/content',contentRoutes);
+app.post("/shareon",jwtAuth,async (req,res)=>{
+try {
+  const myUniqueID = uuidv4();
+  const alreadyShared=await Share.findOne({createdBy:req.id})
+  if(!alreadyShared){
+    await Share.create({slug:myUniqueID,isSharing:true,createdBy:req.id})
+    res.status(201).json({"slug":myUniqueID,"isSharing":true})
+  }else{
+    res.status(409).send("Already Shared")
+  }
+} catch (error) {
+  res.status(500).send(error)
+}
+})
+app.post("/shareoff",jwtAuth,async (req,res)=>{
+  await Share.deleteMany({createdBy:req.id})
+  res.status(200).json({"isSharing":false})
+})
+app.get("/share/:id",async (req,res)=>{
+  const shared=await Share.find({slug:req.params.id})
+  const contents=await Content.find({createdBy:shared[0].createdBy})
+  res.status(200).send(contents)
+})
 app.listen(port, () => console.log('> Server is up and running on port: ' + port));

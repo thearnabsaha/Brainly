@@ -2,17 +2,23 @@ import Sidebar from "./Sidebar"
 import { Button } from "./ui/button"
 import { ModeToggle } from "./ui/theme/mode-toggle"
 import { DialogHeader,Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "./ui/dialog"
+import { MdOutlineContentCopy } from "react-icons/md";
 import { Input } from "./ui/input"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Badge } from "./ui/badge"
 import { inputValueState, tagsState } from "@/store/atoms"
 import { useRecoilState } from "recoil"
 import axios from "axios"
+import { FaCheck } from "react-icons/fa6";
+import { Switch } from "./ui/switch";
 
 const Navbar = () => {
   const [inputValue, setInputValue] = useRecoilState(inputValueState);
   const [tags, setTags] = useRecoilState(tagsState);
   const [tagValue, setTagValue] = useState("")
+  const [copied, setCopied] = useState(false)
+  const [sharedLink, setSharedLink] = useState('http://localhost:5173/user')
+  const [sharable, setSharable] = useState(true)
   const token=localStorage.getItem('token')
   if(!token){
     return
@@ -46,11 +52,35 @@ const Navbar = () => {
     setTags(newtags)
     setInputValue({...inputValue,tags:newtags})
   }
+  const copyHandler=()=>{
+    navigator.clipboard.writeText(sharedLink)
+    setTimeout(() => {
+      setCopied(false)
+    }, 2000);
+    setCopied(true)
+  }
+  const checkedChangedHandler=()=>{
+    setSharable(prev=>!prev)
+    console.log(sharable);
+  }
   return (
     <div className="flex justify-between px-10 py-5 items-center">
       <Sidebar/>
       <div className="mr-10 flex items-center">
-        <Button className="mx-1 rounded-sm cursor-pointer">Share</Button>
+        <Dialog>
+          <DialogTrigger>
+            <Button className="mx-1 rounded-sm cursor-pointer">Share</Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle className="text-3xl">Your Sharable Link</DialogTitle>
+              <DialogDescription>
+              <h1 className="flex items-center">Do You Want to Share all Your Links<Switch onCheckedChange={checkedChangedHandler} className="ml-5"/></h1>
+                <h1 className=" border py-3 px-10 bg-accent flex justify-between text-xl items-center my-5 rounded-sm">{sharedLink} <Button className=" cursor-pointer" onClick={copyHandler}>{copied?<FaCheck className="text-2xl duration-500 ease-in-out"/>:<MdOutlineContentCopy className="text-2xl duration-500 ease-in-out"/>}</Button></h1>
+              </DialogDescription>
+            </DialogHeader>
+          </DialogContent>
+        </Dialog>
         <Dialog>
           <DialogTrigger>
             <Button className="mx-1 rounded-sm mr-5 cursor-pointer">Add Content</Button>
