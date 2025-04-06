@@ -17,13 +17,8 @@ const Dashboard = ()=> {
   const token=localStorage.getItem('token')
   const navigate=useNavigate()
   const [data, setData] = useState<any>([])
-  const [copied, setCopied] = useState(false)
   const copyHandler=(link:string)=>{
     navigator.clipboard.writeText(link)
-    setTimeout(() => {
-      setCopied(false)
-    }, 2000);
-    setCopied(true)
   }
   const deleteContent=(id:string)=>{
     if(!token){

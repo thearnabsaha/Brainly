@@ -1,12 +1,12 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { GoShareAndroid } from "react-icons/go";
 import { FaYoutube,FaTwitter } from "react-icons/fa";
 import { HiOutlineDocument } from "react-icons/hi";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import {  useParams } from "react-router-dom";
 import NoPage from "./NoPage";
+import { MdOutlineContentCopy } from "react-icons/md";
 interface dataInterface{
   _id:string,
   title:string,
@@ -15,6 +15,9 @@ interface dataInterface{
   createdAt:string,
 }
 const SharedPage = ()=> {
+  const copyHandler=(link:string)=>{
+    navigator.clipboard.writeText(link)
+  }
   const token=localStorage.getItem('token')
   const [data, setData] = useState<any>([])
   const {id} = useParams()
@@ -64,7 +67,7 @@ const SharedPage = ()=> {
                 </div>
                 <p className=" text-center p-1">{e.title}</p>
                 <div className="flex">
-                <GoShareAndroid className="text-2xl mr-2 cursor-pointer"/>
+                <MdOutlineContentCopy className="text-2xl duration-500 ease-in-out cursor-pointer" onClick={()=>copyHandler(e.link)}/>
                 </div>
                 </CardTitle>
               {

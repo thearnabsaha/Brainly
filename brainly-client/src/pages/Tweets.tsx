@@ -1,7 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { MdOutlineDelete } from "react-icons/md";
-import { GoShareAndroid } from "react-icons/go";
+import { MdOutlineContentCopy, MdOutlineDelete } from "react-icons/md";
 import { FaTwitter } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -14,6 +13,9 @@ interface dataInterface{
   createdAt:string,
 }
 const Tweets = () => {
+  const copyHandler=(link:string)=>{
+    navigator.clipboard.writeText(link)
+  }
     const navigate=useNavigate()
     const token=localStorage.getItem('token')
     const [data, setData] = useState<any>([])
@@ -59,7 +61,8 @@ const Tweets = () => {
                             </div>
                             <p className=" text-center p-1">{e.title}</p>
                             <div className="flex">
-                            <GoShareAndroid className="text-2xl mr-2 cursor-pointer"/>
+                                            <MdOutlineContentCopy className="text-2xl duration-500 ease-in-out cursor-pointer" onClick={()=>copyHandler(e.link)}/>
+                            
                             <MdOutlineDelete className="text-2xl ml-2 cursor-pointer" onClick={()=>deleteContent(e._id)}/>
                             </div>
                             </CardTitle>
