@@ -23,7 +23,7 @@ const Tweets = () => {
 }
     const navigate=useNavigate()
     const token=localStorage.getItem('token')
-    const [data, setData] = useState<any>([])
+    const [data, setData] = useState<dataInterface[]>([])
     const [copied, setCopied] = useState(false)
     const [copyId, setCopyId] = useState("")
     const deleteContent=(id:string)=>{

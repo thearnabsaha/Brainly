@@ -16,7 +16,7 @@ interface dataInterface{
 const Dashboard = ()=> {
   const token=localStorage.getItem('token')
   const navigate=useNavigate()
-  const [data, setData] = useState<any>([])
+  const [data, setData] = useState<dataInterface[]>([])
   const [copied, setCopied] = useState(false)
   const [copyId, setCopyId] = useState("")
   const copyHandler=(link:string,id:string)=>{

@@ -24,7 +24,7 @@ const SharedPage = ()=> {
     setCopied(true)
 }
   const token=localStorage.getItem('token')
-  const [data, setData] = useState<any>([])
+  const [data, setData] = useState<dataInterface[]>([])
   const [copied, setCopied] = useState(false)
   const [copyId, setCopyId] = useState("")
   const {id} = useParams()
@@ -34,7 +34,7 @@ const SharedPage = ()=> {
       setData([...res.data])
     })
     .catch((res)=>{
-        setData("")
+        setData([])
         console.log(res)
     })
   }, [token])
