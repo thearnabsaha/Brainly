@@ -10,16 +10,18 @@ Brainly is a full-stack application designed to manage and share content such as
 
 ### Client
 
-- **User Authentication**: Signup and Signin functionality.
+- **User Authentication**: Signup and Signin functionality with form validation using `zod`.
 - **Content Management**:
   - Add, view, and delete content.
   - Filter content by type (Tweets, Videos, etc.).
+  - Tag-based categorization for better organization.
 - **Responsive UI**: Built with TailwindCSS for a modern and responsive design.
 - **State Management**: Uses Recoil for global state management.
 - **Toast Notifications**: Provides feedback for user actions using `react-hot-toast`.
 - **Dark Mode**: Toggle between light and dark themes.
 - **Dynamic Sidebar**: Navigate between dashboard, videos, and tweets.
-- **Content Sharing**: Share content links with tags.
+- **Content Sharing**: Share content links with tags and generate sharable links.
+- **Copy to Clipboard**: Easily copy links to the clipboard with visual feedback.
 
 ### Server
 
@@ -29,6 +31,9 @@ Brainly is a full-stack application designed to manage and share content such as
 - **Validation**: Input validation using `zod`.
 - **Database**: MongoDB for storing user and content data.
 - **Error Handling**: Improved error handling for better debugging.
+- **Sharing API**:
+  - Enable or disable sharing of user content.
+  - Generate unique sharable links for content.
 
 ---
 
@@ -41,6 +46,8 @@ Brainly is a full-stack application designed to manage and share content such as
 - **TailwindCSS**: Utility-first CSS framework.
 - **Vite**: Build tool for fast development.
 - **Recoil**: State management library.
+- **React Router**: For routing and navigation.
+- **React Icons**: For modern and customizable icons.
 
 ### Server
 
@@ -59,37 +66,14 @@ Brainly is a full-stack application designed to manage and share content such as
 
 ```
 brainly-client/
-├── public/                # Static assets
-├── src/                   # Source code
-│   ├── Components/        # Reusable UI components
-│   ├── Pages/             # Application pages
-│   ├── store/             # Recoil atoms
-│   ├── App.tsx            # Main application component
-│   ├── main.tsx           # Entry point
-│   ├── index.css          # TailwindCSS styles
-│   └── data.json          # Placeholder for data
-├── tailwind.config.js     # TailwindCSS configuration
-├── vite.config.ts         # Vite configuration
-├── tsconfig.json          # TypeScript configuration
-├── package.json           # Project dependencies and scripts
-└── .gitignore             # Ignored files
+...existing code...
 ```
 
 ### Server
 
 ```
 brainly-server/
-├── app/
-│   ├── controller/        # Controllers for handling requests
-│   ├── database/          # Database connection
-│   ├── jwt/               # JWT authentication middleware
-│   ├── model/             # Mongoose models
-│   ├── routes/            # API routes
-│   └── index.ts           # Main server file
-├── .env                   # Environment variables
-├── tsconfig.json          # TypeScript configuration
-├── package.json           # Project dependencies and scripts
-└── .gitignore             # Ignored files
+...existing code...
 ```
 
 ---
@@ -109,6 +93,13 @@ brainly-server/
 - `PUT /content/:id`: Update content.
 - `DELETE /content`: Delete all content.
 - `DELETE /content/:id`: Delete specific content.
+
+### Sharing Routes
+
+- `POST /shareon`: Enable sharing and generate a unique link.
+- `POST /shareoff`: Disable sharing.
+- `GET /shareon`: Get sharing status and link.
+- `GET /share/:id`: Access shared content by ID.
 
 ---
 
@@ -158,11 +149,52 @@ brainly-server/
 
 ---
 
+## Features in Detail
+
+### Authentication
+
+- **Signup**: Validates user input using `zod` and stores hashed passwords in MongoDB.
+- **Signin**: Verifies credentials and generates a JWT token for secure access.
+
+### Content Management
+
+- **Add Content**: Users can add content with a title, link, and tags.
+- **View Content**: Content is displayed in a card layout with embedded previews for YouTube and Twitter links.
+- **Delete Content**: Users can delete individual or all content.
+
+### Sharing
+
+- **Enable Sharing**: Generates a unique link for sharing all user content.
+- **Disable Sharing**: Revokes the sharing link.
+- **Access Shared Content**: View shared content using the unique link.
+
+### UI/UX
+
+- **Dark Mode**: Toggle between light and dark themes.
+- **Responsive Design**: Optimized for all screen sizes.
+- **Sidebar Navigation**: Easily navigate between different sections.
+- **Toast Notifications**: Provides instant feedback for user actions.
+
+---
+
 ## Future Improvements
 
-- Implement sharing functionality in `/share` routes.
-- Add controllers for better route handling.
-- Enhance error handling and logging.
-- Integrate client and server for seamless communication.
 - Add more filters and sorting options for content.
+- Implement advanced search functionality.
+- Enhance error handling and logging.
+- Add unit and integration tests.
 - Improve UI/UX for better user interaction.
+- Add analytics for shared content.
+
+---
+
+## Acknowledgments
+
+- **React**: For the frontend framework.
+- **TailwindCSS**: For the beautiful and responsive design.
+- **MongoDB**: For the database.
+- **Express**: For the backend framework.
+- **Zod**: For input validation.
+- **Recoil**: For state management.
+- **React Icons**: For modern icons.
+- **React Hot Toast**: For toast notifications.
