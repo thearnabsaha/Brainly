@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { FaYoutube,FaTwitter } from "react-icons/fa";
+import { FaYoutube,FaTwitter, FaCheck } from "react-icons/fa";
 import { HiOutlineDocument } from "react-icons/hi";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -15,11 +15,18 @@ interface dataInterface{
   createdAt:string,
 }
 const SharedPage = ()=> {
-  const copyHandler=(link:string)=>{
+  const copyHandler=(link:string,id:string)=>{
+    setCopyId(id)
     navigator.clipboard.writeText(link)
-  }
+    setTimeout(() => {
+      setCopied(false)
+    }, 2000);
+    setCopied(true)
+}
   const token=localStorage.getItem('token')
   const [data, setData] = useState<any>([])
+  const [copied, setCopied] = useState(false)
+  const [copyId, setCopyId] = useState("")
   const {id} = useParams()
   useEffect(() => {
     axios.get(`/api/share/${id}`)
@@ -67,7 +74,7 @@ const SharedPage = ()=> {
                 </div>
                 <p className=" text-center p-1">{e.title}</p>
                 <div className="flex">
-                <MdOutlineContentCopy className="text-2xl duration-500 ease-in-out cursor-pointer" onClick={()=>copyHandler(e.link)}/>
+                  {copied&&copyId==e._id?<FaCheck className="text-2xl duration-500 ease-in-out"/>:<MdOutlineContentCopy className="text-2xl duration-500 ease-in-out cursor-pointer" onClick={()=>copyHandler(e.link,e._id)}/>}
                 </div>
                 </CardTitle>
               {
