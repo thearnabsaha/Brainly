@@ -24,7 +24,7 @@ const Navbar = () => {
     axios.get("/api/shareon",{headers:{token:JSON.parse(token as string)}})
     .then((res)=>{
       setSharable(res.data.isSharing)
-      setSharedLink("http://localhost:5173/share/"+res.data.slug)
+      setSharedLink(`${window.location.origin}/share/`+res.data.slug)
     })
   }, [])
   
@@ -71,7 +71,7 @@ const Navbar = () => {
     if(!sharable){
       axios.post("/api/shareon",{},{headers:{token:JSON.parse(token)}})
       .then((res)=>{
-        setSharedLink("http://localhost:5173/share/"+res.data.slug)
+        setSharedLink(`${window.location.origin}/share/`+res.data.slug)
         setSharable(res.data.isSharing)
       })
       .catch((res)=>console.log(res));
