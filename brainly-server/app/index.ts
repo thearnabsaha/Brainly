@@ -45,6 +45,16 @@ try {
   res.status(500).send(error)
 }
 })
+app.get("/shareon",jwtAuth,async (req,res)=>{
+try {
+  const alreadyShared=await Share.findOne({createdBy:req.id})
+  if(alreadyShared){
+    res.status(201).json({"isSharing":alreadyShared.isSharing,"slug":alreadyShared.slug})
+  }
+} catch (error) {
+  res.status(500).send(error)
+}
+})
 app.post("/shareoff",jwtAuth,async (req,res)=>{
   try {
     await Share.deleteMany({createdBy:req.id})
@@ -61,6 +71,5 @@ app.get("/share/:id",async (req,res)=>{
   } catch (error) {
     res.status(500).send(error)
   }
-
 })
 app.listen(port, () => console.log('> Server is up and running on port: ' + port));

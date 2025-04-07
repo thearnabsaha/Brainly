@@ -4,7 +4,7 @@ import { ModeToggle } from "./ui/theme/mode-toggle"
 import { DialogHeader,Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "./ui/dialog"
 import { MdOutlineContentCopy } from "react-icons/md";
 import { Input } from "./ui/input"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Badge } from "./ui/badge"
 import { inputValueState, tagsState } from "@/store/atoms"
 import { useRecoilState } from "recoil"
@@ -20,6 +20,14 @@ const Navbar = () => {
   const [sharedLink, setSharedLink] = useState('')
   const [sharable, setSharable] = useState(false)
   const token=localStorage.getItem('token')
+  useEffect(() => {
+    axios.get("/api/shareon",{headers:{token:JSON.parse(token as string)}})
+    .then((res)=>{
+      setSharable(res.data.isSharing)
+      setSharedLink("http://localhost:5173/share/"+res.data.slug)
+    })
+  }, [])
+  
   if(!token){
     return
   }
