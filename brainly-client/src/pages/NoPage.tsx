@@ -16,10 +16,6 @@ const NoPage = () => {
 
 export default NoPage
 
-import { Search, ArrowLeft } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-
 interface NotFoundProps {
   title?: string
   description?: string
