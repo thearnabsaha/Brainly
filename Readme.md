@@ -1,39 +1,39 @@
 # Brainly Project
 
+![Brainly Logo](https://via.placeholder.com/600x200?text=Brainly+Project)
+
 ## Overview
 
-Brainly is a full-stack application designed to manage and share content such as tweets, videos, and links. The project consists of a **client** built with React, TypeScript, and TailwindCSS, and a **server** built with Node.js, Express, and MongoDB. The application supports user authentication, content management, and a responsive UI with dark mode.
+Brainly is a full-stack application designed to manage and share content such as tweets, videos, and links. It features a **React-based client** and a **Node.js server** with MongoDB as the database. The application supports user authentication, content management, and a responsive UI with dark mode.
 
 ---
 
 ## Features
 
-### Client
+### Client Features
 
-- **User Authentication**: Signup and Signin functionality with form validation using `zod`.
-- **Content Management**:
-  - Add, view, and delete content.
-  - Filter content by type (Tweets, Videos, etc.).
-  - Tag-based categorization for better organization.
-- **Responsive UI**: Built with TailwindCSS for a modern and responsive design.
-- **State Management**: Uses Recoil for global state management.
-- **Toast Notifications**: Provides feedback for user actions using `react-hot-toast`.
-- **Dark Mode**: Toggle between light and dark themes.
-- **Dynamic Sidebar**: Navigate between dashboard, videos, and tweets.
-- **Content Sharing**: Share content links with tags and generate sharable links.
-- **Copy to Clipboard**: Easily copy links to the clipboard with visual feedback.
+| Feature                | Description                                                                 |
+|------------------------|-----------------------------------------------------------------------------|
+| **Authentication**     | Signup and Signin functionality with JWT-based secure access.               |
+| **Content Management** | Add, view, delete, and filter content by type (Tweets, Videos, etc.).        |
+| **Responsive UI**      | Built with TailwindCSS for a modern and responsive design.                   |
+| **Dark Mode**          | Toggle between light and dark themes.                                       |
+| **State Management**   | Uses Recoil for global state management.                                     |
+| **Toast Notifications**| Provides feedback for user actions using `react-hot-toast`.                  |
+| **Dynamic Sidebar**    | Navigate between dashboard, videos, and tweets.                             |
+| **Content Sharing**    | Share content links with tags and generate sharable links.                   |
+| **Copy to Clipboard**  | Easily copy links to the clipboard with visual feedback.                     |
 
-### Server
+### Server Features
 
-- **Authentication**: JWT-based authentication for secure access.
-- **Content API**:
-  - Create, retrieve, update, and delete content.
-- **Validation**: Input validation using `zod`.
-- **Database**: MongoDB for storing user and content data.
-- **Error Handling**: Improved error handling for better debugging.
-- **Sharing API**:
-  - Enable or disable sharing of user content.
-  - Generate unique sharable links for content.
+| Feature                | Description                                                                 |
+|------------------------|-----------------------------------------------------------------------------|
+| **Authentication**     | JWT-based authentication for secure access.                                |
+| **Content API**        | Create, retrieve, update, and delete content.                               |
+| **Validation**         | Input validation using `zod`.                                               |
+| **Database**           | MongoDB for storing user and content data.                                  |
+| **Error Handling**     | Comprehensive error handling for better debugging.                          |
+| **Sharing API**        | Enable or disable sharing of user content and generate unique sharable links.|
 
 ---
 
@@ -82,24 +82,30 @@ brainly-server/
 
 ### User Routes
 
-- `POST /signup`: User registration.
-- `POST /signin`: User login.
+| Method | Endpoint       | Description          |
+|--------|----------------|----------------------|
+| POST   | `/signup`      | User registration.   |
+| POST   | `/signin`      | User login.          |
 
 ### Content Routes
 
-- `POST /content`: Add new content.
-- `GET /content`: Get all content.
-- `GET /content/:id`: Get specific content.
-- `PUT /content/:id`: Update content.
-- `DELETE /content`: Delete all content.
-- `DELETE /content/:id`: Delete specific content.
+| Method | Endpoint          | Description               |
+|--------|-------------------|---------------------------|
+| POST   | `/content`        | Add new content.          |
+| GET    | `/content`        | Get all content.          |
+| GET    | `/content/:id`    | Get specific content.     |
+| PUT    | `/content/:id`    | Update content.           |
+| DELETE | `/content`        | Delete all content.       |
+| DELETE | `/content/:id`    | Delete specific content.  |
 
 ### Sharing Routes
 
-- `POST /shareon`: Enable sharing and generate a unique link.
-- `POST /shareoff`: Disable sharing.
-- `GET /shareon`: Get sharing status and link.
-- `GET /share/:id`: Access shared content by ID.
+| Method | Endpoint          | Description               |
+|--------|-------------------|---------------------------|
+| POST   | `/shareon`        | Enable sharing.           |
+| POST   | `/shareoff`       | Disable sharing.          |
+| GET    | `/shareon`        | Get sharing status.       |
+| GET    | `/share/:id`      | Access shared content.    |
 
 ---
 
