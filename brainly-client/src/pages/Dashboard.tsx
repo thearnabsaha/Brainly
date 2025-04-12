@@ -52,7 +52,7 @@ const Dashboard = ()=> {
     return date.toLocaleDateString("en-GB");
   };
   return (
-    <div className="flex justify-start mt-5 w-[75vw] mb-5 m-auto flex-wrap">
+    <div className="flex justify-start mt-5 lg:w-[80vw] md:w-[90vw] mb-5 m-auto flex-wrap">
       {
         data.map((e:dataInterface)=>{
           const youtube=e.link.includes("youtube.com")
@@ -67,7 +67,7 @@ const Dashboard = ()=> {
           }
           const nlink=convertToEmbedUrl(e.link)
           return(
-            <Card className=" w-96 h-[480px] overflow-auto m-3" key={e._id}>
+            <Card className=" md:w-96 w-full h-[480px] overflow-auto m-3" key={e._id}>
               <CardHeader>
                 <CardTitle className="flex justify-around items-center">
                   <div className="flex">

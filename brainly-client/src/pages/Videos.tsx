@@ -51,7 +51,8 @@ const Videos = () => {
       return date.toLocaleDateString("en-GB");
     };
     return (
-      <div className="flex justify-start mt-5 w-[75vw] h-screen m-auto flex-wrap">
+    <div className="flex justify-center lg:justify-start mt-5 lg:w-[80vw] md:w-[90vw] mb-5 m-auto flex-wrap">
+
         {
           data.map((e:dataInterface)=>{
             const youtube=e.link.includes("youtube.com")
@@ -67,7 +68,7 @@ const Videos = () => {
             return(
                 <div>
                     {
-                        youtube&&<Card className=" w-96 h-[480px] overflow-auto m-3" key={e._id}>
+                        youtube&&<Card className="w-96 h-[480px] overflow-auto m-3" key={e._id}>
                         <CardHeader>
                           <CardTitle className="flex justify-around items-center">
                             <div className="flex">
