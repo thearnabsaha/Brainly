@@ -1,7 +1,5 @@
 # Brainly Project
 
-![Brainly Logo](https://via.placeholder.com/600x200?text=Brainly+Project)
-
 ## Overview
 
 Brainly is a full-stack application designed to manage and share content such as tweets, videos, and links. It features a **React-based client** and a **Node.js server** with MongoDB as the database. The application supports user authentication, content management, and a responsive UI with dark mode.
