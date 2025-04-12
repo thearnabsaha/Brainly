@@ -64,14 +64,24 @@ Brainly is a full-stack application designed to manage and share content such as
 
 ```
 brainly-client/
-...existing code...
+├── public/
+├── src/
+│   ├── components/
+│   ├── lib/
+│   ├── pages/
+│   ├── store/
 ```
 
 ### Server
 
 ```
 brainly-server/
-...existing code...
+├── app/
+│   ├── controller/
+│   ├── database/
+│   ├── jwt/
+│   ├── model/
+│   ├── routes/
 ```
 
 ---
