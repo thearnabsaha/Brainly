@@ -21,6 +21,8 @@ Brainly is a full-stack application designed to manage and share content such as
 | **Dynamic Sidebar**    | Navigate between dashboard, videos, and tweets.                             |
 | **Content Sharing**    | Share content links with tags and generate sharable links.                   |
 | **Copy to Clipboard**  | Easily copy links to the clipboard with visual feedback.                     |
+| **Edit Functionality** | Fetches and displays previous values for editing content.                    |
+| **No Content Page**    | Displays a placeholder page when no content is available in dashboards.      |
 
 ### Server Features
 
@@ -32,6 +34,7 @@ Brainly is a full-stack application designed to manage and share content such as
 | **Database**           | MongoDB for storing user and content data.                                  |
 | **Error Handling**     | Comprehensive error handling for better debugging.                          |
 | **Sharing API**        | Enable or disable sharing of user content and generate unique sharable links.|
+| **Change Password**    | Allows users to securely change their passwords.                            |
 
 ---
 
@@ -94,6 +97,7 @@ brainly-server/
 |--------|----------------|----------------------|
 | POST   | `/signup`      | User registration.   |
 | POST   | `/signin`      | User login.          |
+| POST   | `/changepassword` | Change user password. |
 
 ### Content Routes
 
@@ -169,12 +173,15 @@ brainly-server/
 
 - **Signup**: Validates user input using `zod` and stores hashed passwords in MongoDB.
 - **Signin**: Verifies credentials and generates a JWT token for secure access.
+- **Change Password**: Allows users to securely update their passwords.
 
 ### Content Management
 
 - **Add Content**: Users can add content with a title, link, and tags.
 - **View Content**: Content is displayed in a card layout with embedded previews for YouTube and Twitter links.
+- **Edit Content**: Fetches and displays previous values for editing.
 - **Delete Content**: Users can delete individual or all content.
+- **No Content Page**: Displays a placeholder page when no content is available.
 
 ### Sharing
 
@@ -217,5 +224,9 @@ brainly-server/
 
 ## Chores To-Do
 
-- Add an **Edit Button** for content items.
 - Implement a **Change Password** feature.
+- Add a **No Content Here** page in dashboards.
+- Ensure **Edit** functionality fetches previous values first.
+- Make **Videos/Tweets/Dashboard** navigation more intuitive and easily solvable.
+- Try to remove warnings and errors from the console.
+- Ensure there are no extra logs in the console.
