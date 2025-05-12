@@ -226,4 +226,3 @@ brainly-server/
 
 - Implement a **Change Password** feature.
 - Ensure **Edit** functionality fetches previous values first.
-- Make **Videos/Tweets/Dashboard** navigation more intuitive and easily solvable.
