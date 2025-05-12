@@ -212,3 +212,12 @@ brainly-server/
 - **Recoil**: For state management.
 - **React Icons**: For modern icons.
 - **React Hot Toast**: For toast notifications.
+
+
+
+## Chores To-Do
+
+- Add an **Edit Button** for content items.
+- Make the **Pop-up** responsive for better usability.
+- Implement a **Change Password** feature.
+- Add a **Profile Section** in the sidebar for user details and settings.
