@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { z } from 'zod';
 import { User } from '../model/UserModel';
+import { Content } from '../model/ContentModel';
 const schema = z.object({
     email: z.string().email({ message: 'Invalid email address' }),
     username: z.string().min(3, { message: 'Username must be at least 3 characters long' }),
@@ -53,3 +54,14 @@ export const userSignin= async (req:Request, res:Response) => {
         res.send(error);
     }
 };
+export const userProfile = async (req:Request, res:Response) => {
+    try {
+        const user= await User.findOne({_id:req.id})
+        const contents=await Content.find({createdBy:req.id})
+        // console.log(contents.length)
+        res.status(200).send({username:user?.username,email:user?.email,posts:contents?.length})
+    } catch (error) {
+        console.log(error)
+        res.status(500).send(error)
+    }
+}
