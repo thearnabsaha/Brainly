@@ -225,8 +225,5 @@ brainly-server/
 ## Chores To-Do
 
 - Implement a **Change Password** feature.
-- Add a **No Content Here** page in dashboards.
 - Ensure **Edit** functionality fetches previous values first.
 - Make **Videos/Tweets/Dashboard** navigation more intuitive and easily solvable.
-- Try to remove warnings and errors from the console.
-- Ensure there are no extra logs in the console.
