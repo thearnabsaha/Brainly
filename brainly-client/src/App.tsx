@@ -7,6 +7,7 @@ import NoPage from "./pages/NoPage";
 import Videos from "./pages/Videos";
 import Tweets from "./pages/Tweets";
 import SharedPage from "./pages/SharedPage";
+import Profile from "./pages/Profile";
 const App = () => {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
@@ -17,6 +18,7 @@ const App = () => {
             <Route path="*" element={<NoPage />} />
             <Route path="videos" element={<Videos />} />
             <Route path="tweets" element={<Tweets />} />
+            <Route path="profile" element={<Profile />} />
           </Route>
             <Route path="/" element={<Creadentials />} />
             <Route path="signup" element={<Creadentials />} />

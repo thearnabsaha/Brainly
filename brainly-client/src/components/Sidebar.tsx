@@ -5,7 +5,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { LuLayoutGrid,LuBrain } from "react-icons/lu";
-import { FaYoutube,FaTwitter } from "react-icons/fa";
+import { FaYoutube,FaTwitter,FaUser } from "react-icons/fa";
 import { IoIosLogOut } from "react-icons/io";
 import { useNavigate } from "react-router-dom"
 const Sidebar = () => {
@@ -22,6 +22,10 @@ const Sidebar = () => {
       navigate('/user')
       window.location.reload(); 
     }
+    const onclickhandler4=()=>{
+      navigate('/user/profile')
+      window.location.reload(); 
+    }
   return (
     <div>
       <Sheet>
@@ -33,6 +37,7 @@ const Sidebar = () => {
             <h1 onClick={onclickhandler3} className="flex hover:bg-accent py-2 cursor-pointer"><LuLayoutGrid className=" mx-5 text-3xl"/>Dashboard</h1>
             <h1 onClick={()=>navigate("/user/videos")} className="flex hover:bg-accent py-2 cursor-pointer"><FaYoutube className=" mx-5 text-3xl"/>Videos</h1>
             <h1 onClick={onclickhandler2} className="flex hover:bg-accent py-2 cursor-pointer"><FaTwitter className=" mx-5 text-3xl"/>Tweets</h1>
+            <h1 onClick={onclickhandler4} className="flex hover:bg-accent py-2 cursor-pointer"><FaUser className=" mx-5 text-3xl"/>Profile</h1>
             <h1 onClick={onclickhandler} className="flex hover:bg-accent py-2 cursor-pointer"><IoIosLogOut className=" mx-5 text-3xl"/>Logout</h1>
         </SheetContent>
       </Sheet>
