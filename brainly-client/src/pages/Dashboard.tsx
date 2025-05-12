@@ -45,14 +45,6 @@ const Dashboard = () => {
       .catch((res) => console.log(res))
     window.location.reload();
   }
-  // const editContent = (id: string) => {
-  //   if (!token) {
-  //     return;
-  //   }
-  //   axios.put(`/api/content/${id}`, { headers: { token: JSON.parse(token) } })
-  //     .then((res) => console.log(res))
-  //     .catch((res) => console.log(res))
-  // }
   useEffect(() => {
     if (!token) {
       navigate('/')
