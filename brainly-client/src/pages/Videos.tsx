@@ -129,9 +129,9 @@ const Youtube = () => {
                             <Input placeholder="Title" type="text" className="my-4" value={inputValue.title} onChange={(e) => setInputValue({ ...inputValue, title: e.target.value })} />
                             <Input placeholder="Link" type="text" value={inputValue.link} onChange={(e) => setInputValue({ ...inputValue, link: e.target.value })} />
                             <div className="h-[300px] border my-4 overflow-x-hidden sm:w-[470px] overflow-y-scroll">
-                              {tags.map((e) => {
+                              {tags.map((e,i) => {
                                 return (
-                                  <Badge className="m-2">{e} <span className="text-red-500 text-lg" onClick={() => handleFilterTags(e)}>x</span> </Badge>
+                                  <Badge className="m-2" key={e+i}>{e} <span className="text-red-500 text-lg" onClick={() => handleFilterTags(e)}>x</span> </Badge>
                                 )
                               })}
                             </div>
