@@ -44,8 +44,6 @@ const SharedPage = ()=> {
   };
   return (
     !data?<NoPage/>:<div className="flex justify-center lg:justify-start  mt-5 lg:w-[80vw] md:w-[90vw] mb-5 m-auto flex-wrap">
-
-      
     {
       data.map((e:dataInterface)=>{
         const youtube=e.link.includes("youtube.com")

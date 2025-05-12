@@ -92,13 +92,13 @@ const Navbar = () => {
           <DialogTrigger>
             <Button className="mx-1 rounded-sm cursor-pointer">Share</Button>
           </DialogTrigger>
-          <DialogContent>
+          <DialogContent className="p-2 pt-6">
             <DialogHeader>
               <DialogTitle className="text-3xl">Your Sharable Link</DialogTitle>
               <DialogDescription>
-              <h1 className="flex items-center">Do You Want to Share all Your Links<Switch onCheckedChange={checkedChangedHandler} className="ml-5  cursor-pointer" checked={sharable}/></h1>
-                {sharable&&<div className=" flex justify-between my-5 items-center ">
-                  <h1 className=" border py-3 px-10 bg-accent my-5 rounded-sm overflow-x-hidden w-96">{sharedLink}</h1>
+              <h1 className="flex items-center justify-center sm:justify-start">Do You Want to Share all Your Links<Switch onCheckedChange={checkedChangedHandler} className="ml-5  cursor-pointer" checked={sharable}/></h1>
+                {sharable&&<div className=" flex justify-between my-5 items-center flex-col sm:flex-row">
+                  <h1 className=" border py-3 px-10 bg-accent my-5 rounded-sm overflow-x-hidden sm:w-96 w-full break-words">{sharedLink}</h1>
                 <Button className=" cursor-pointer" onClick={copyHandler}>{copied?<FaCheck className="text-2xl duration-500 ease-in-out"/>:<MdOutlineContentCopy className="text-2xl duration-500 ease-in-out"/>}</Button>
                   </div>}
               </DialogDescription>
