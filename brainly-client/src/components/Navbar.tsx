@@ -92,7 +92,7 @@ const Navbar = () => {
           <DialogTrigger>
             <Button className="mx-1 rounded-sm cursor-pointer">Share</Button>
           </DialogTrigger>
-          <DialogContent className="p-2 pt-6">
+          <DialogContent className="p-2 sm:p-6">
             <DialogHeader>
               <DialogTitle className="text-3xl">Your Sharable Link</DialogTitle>
               <DialogDescription>
@@ -115,7 +115,7 @@ const Navbar = () => {
               <DialogDescription>
                   <Input placeholder="Title" type="text" className="my-4" value={inputValue.title} onChange={(e)=>setInputValue({...inputValue,title:e.target.value})}/>
                   <Input placeholder="Link" type="text" value={inputValue.link} onChange={(e)=>setInputValue({...inputValue,link:e.target.value})}/>
-                  <div className="h-[300px] border my-4 overflow-x-hidden w-[470px] overflow-y-scroll">
+                  <div className="h-[300px] border my-4 overflow-x-hidden sm:w-[470px] overflow-y-scroll">
                     {tags.map((e)=>{
                       return(
                         <Badge className="m-2">{e} <span className="text-red-500 text-lg" onClick={()=>handleFilterTags(e)}>x</span> </Badge>
