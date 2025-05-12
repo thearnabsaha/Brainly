@@ -33,7 +33,10 @@ export const ContentGetId= async (req:Request, res:Response) => {
 };
 export const ContentPutId= async (req:Request, res:Response) => {
     try {
-        await Content.updateOne({id:req.params.id,title:req.id},{$set:{title:req.body.title,link:req.body.link,tags:req.body.tags}})
+        const content=await Content.updateOne({_id:req.params.id,createdBy:req.id},{$set:{title:req.body.title,link:req.body.link,tags:req.body.tags}})
+        const content2=await Content.findOne({_id:req.params.id,createdBy:req.id})
+
+        res.json({"content":content2})
     } catch (error) {
         console.log(error);
         res.send('hello from simple server :)');
