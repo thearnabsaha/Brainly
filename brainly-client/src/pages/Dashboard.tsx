@@ -190,7 +190,7 @@ const Dashboard = () => {
         })
       }
       {
-        !data.length&&<h1 className="flex justify-center items-center w-screen h-[80vh] text-6xl">No content</h1>
+        !data.length&&<h1 className="flex justify-center items-center w-screen h-[80vh] text-6xl">No Content</h1>
       }
     </div>
   )

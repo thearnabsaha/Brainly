@@ -163,7 +163,6 @@ const Tweets = () => {
             </Card>
           )
         })
-        
       }
     </div>
   )
