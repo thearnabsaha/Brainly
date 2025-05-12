@@ -29,7 +29,7 @@ const Sidebar = () => {
   return (
     <div>
       <Sheet>
-        <SheetTrigger className=" cursor-pointer">
+        <SheetTrigger className=" cursor-pointer -translate-x-5 sm:-translate-x-0">
           <Menu/>
         </SheetTrigger>
         <SheetContent side="left">

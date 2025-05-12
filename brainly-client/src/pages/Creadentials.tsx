@@ -97,9 +97,9 @@ const Credentials = () => {
   
   return (
     <div className="h-screen w-screen flex justify-center items-center">
-      <h1 className="absolute top-10 text-accent border rounded-lg px-2 py-1">Demo Username: thearnabsaha , Password: Arnab@123 </h1>
+      <h1 className="absolute top-5 sm:top-10 text-accent border rounded-lg px-2 py-1">Demo Username: thearnabsaha , Password: Arnab@123 </h1>
       <Toaster position="top-right" reverseOrder={false} />
-      <Tabs defaultValue="Signup" className="w-[400px]">
+      <Tabs defaultValue="Signup" className="w-[400px] m-2">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="Signup" className=" cursor-pointer">Sign Up</TabsTrigger>
           <TabsTrigger value="Signin" className=" cursor-pointer">Sign In</TabsTrigger>
