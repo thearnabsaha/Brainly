@@ -33,9 +33,8 @@ const SharedPage = ()=> {
     .then((res)=>{
       setData([...res.data])
     })
-    .catch((res)=>{
+    .catch(()=>{
         setData([])
-        console.log(res)
     })
   }, [token])
   const formatDate = (isoString: string): string => {

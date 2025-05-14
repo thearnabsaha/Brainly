@@ -69,7 +69,6 @@ const Tweets = () => {
       setInputValue({ ...inputValue, tags: newtags })
       setTagValue("")
     }
-    console.log(inputValue)
     axios.put(`/api/content/${id}`, { ...inputValue }, { headers: { token: JSON.parse(token) } })
       .then((res)=>console.log(res))
       .catch((res) => console.log(res))
