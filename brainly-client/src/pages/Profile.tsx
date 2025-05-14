@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
+import { useNavigate } from "react-router-dom";
 
 import { Button } from "@/components/ui/button"
 import {
@@ -44,6 +45,7 @@ const formSchema = z.object({
     });
 const Profile = () => {
     const token = localStorage.getItem('token')
+    const navigate = useNavigate()
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -60,13 +62,15 @@ const Profile = () => {
         axios.put(`/api/changePassword`, { ...values }, { headers: { token: JSON.parse(token) } })
             .then((res) => toast.success('Password Changed Successfully'))
             .catch((res) => console.log(res))
-        // console.log(values)
+        console.log(values)
         // toast.success('Password Changed Successfully')
         form.reset()
     }
     const [user, setUser] = useState<{ username?: string; email?: string; posts?: string }>({})
     useEffect(() => {
         if (!token) {
+            navigate('/')
+
             return;
         }
         axios.get("/api/user", { headers: { token: JSON.parse(token) } })
@@ -77,12 +81,12 @@ const Profile = () => {
     return (
         <div className="flex justify-center items-center h-[90vh] flex-col">
             <Toaster position="top-right" reverseOrder={false} />
-            <Card className="px-6 w-72">
+            <Card className="px-6 w-72 sm:w-96">
                 <h1>Username : {user.username}</h1>
                 <h1>Email : {user.email}</h1>
                 <h1>Total Saved Posts : {user.posts}</h1>
             </Card>
-            <Card className="px-6 gap-4 mt-10 w-72">
+            <Card className="px-6 gap-4 mt-10 w-72 sm:w-96">
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                         <FormField
