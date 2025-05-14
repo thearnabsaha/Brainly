@@ -198,6 +198,22 @@ brainly-server/
 
 ---
 
+## Recent Updates
+
+### New Features
+
+- **Change Password**: Added a feature to allow users to securely change their passwords.
+- **No Content Here Page**: Introduced a placeholder page for dashboards with no content.
+- **Edit Functionality**: Enhanced the edit functionality to fetch and display previous values for better user experience.
+- **Improved Navigation**: Redesigned navigation for Videos, Tweets, and Dashboard to make it more intuitive.
+
+### Bug Fixes
+
+- Removed warnings and errors from the console for a cleaner development experience.
+- Eliminated unnecessary logs from the console to improve performance and readability.
+
+---
+
 ## Future Improvements
 
 - Add more filters and sorting options for content.
@@ -224,4 +240,3 @@ brainly-server/
 
 ## Chores To-Do
 
-- Ensure **Edit** functionality fetches previous values first.

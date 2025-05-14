@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { MdOutlineContentCopy, MdOutlineDelete, MdOutlineEdit } from "react-icons/md";
-import {  FaTwitter, FaCheck } from "react-icons/fa";
+import { FaTwitter, FaCheck } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -44,6 +44,17 @@ const Tweets = () => {
       .catch((res) => console.log(res))
     window.location.reload();
   }
+  const editValuesHandler = (id: string) => {
+    if (!token) {
+      return;
+    }
+    axios.get(`/api/content/${id}`, { headers: { token: JSON.parse(token) } })
+      .then((res) => {
+        setInputValue({ title: res.data.content.title, link: res.data.content.link, tags: [...res.data.content.tags] })
+        setTags([...res.data.content.tags])
+      })
+      .catch((res) => console.log(res))
+  }
   useEffect(() => {
     if (!token) {
       navigate('/')
@@ -70,7 +81,7 @@ const Tweets = () => {
       setTagValue("")
     }
     axios.put(`/api/content/${id}`, { ...inputValue }, { headers: { token: JSON.parse(token) } })
-      .then((res)=>console.log(res))
+      .then((res) => console.log(res))
       .catch((res) => console.log(res))
     setInputValue({ title: "", link: "", tags: [] })
     setTags([])
@@ -97,23 +108,23 @@ const Tweets = () => {
         data.map((e: dataInterface) => {
           const twitter = e.link.includes("twitter.com") || e.link.includes("x.com")
           return (
-            twitter&&<Card className=" md:w-96 w-full h-[480px] overflow-auto m-3" key={e._id}>
+            twitter && <Card className=" md:w-96 w-full h-[480px] overflow-auto m-3" key={e._id}>
               <CardHeader>
                 <CardTitle className="flex justify-around items-center">
                   <div className="flex">
- 
+
                     {
                       twitter && <FaTwitter className="text-2xl mr-4 cursor-pointer" />
                     }
-            
+
                   </div>
                   <p className=" text-center p-1">{e.title}</p>
                   <div className="flex">
                     {copied && copyId == e._id ? <FaCheck className="text-2xl duration-500 ease-in-out" /> : <MdOutlineContentCopy className="text-2xl duration-500 ease-in-out cursor-pointer" onClick={() => copyHandler(e.link, e._id)} />}
 
                     <Dialog>
-                      <DialogTrigger>
-                        <MdOutlineEdit className="text-2xl ml-2 cursor-pointer"/>
+                      <DialogTrigger onClick={() => editValuesHandler(e._id)}>
+                        <MdOutlineEdit className="text-2xl ml-2 cursor-pointer" />
                       </DialogTrigger>
                       <DialogContent>
                         <DialogHeader>
@@ -122,14 +133,14 @@ const Tweets = () => {
                             <Input placeholder="Title" type="text" className="my-4" value={inputValue.title} onChange={(e) => setInputValue({ ...inputValue, title: e.target.value })} />
                             <Input placeholder="Link" type="text" value={inputValue.link} onChange={(e) => setInputValue({ ...inputValue, link: e.target.value })} />
                             <div className="h-[300px] border my-4 overflow-x-hidden sm:w-[470px] overflow-y-scroll">
-                              {tags.map((e,i) => {
+                              {tags.map((e, i) => {
                                 return (
-                                  <Badge className="m-2" key={e+i}>{e} <span className="text-red-500 text-lg" onClick={() => handleFilterTags(e)}>x</span> </Badge>
+                                  <Badge className="m-2" key={e + i}>{e} <span className="text-red-500 text-lg" onClick={() => handleFilterTags(e)}>x</span> </Badge>
                                 )
                               })}
                             </div>
                             <Input placeholder="tags" type="text" value={tagValue} onKeyDown={handleTags} onChange={(e) => { setTagValue(e.target.value) }} />
-                            <Button className="mt-2 cursor-pointer rounded-sm" onClick={()=>submithandler(e._id)} disabled={!inputValue.title || !inputValue.link}>Update Link</Button>
+                            <Button className="mt-2 cursor-pointer rounded-sm" onClick={() => submithandler(e._id)} disabled={!inputValue.title || !inputValue.link}>Update Link</Button>
                           </DialogDescription>
                         </DialogHeader>
                       </DialogContent>
@@ -144,7 +155,7 @@ const Tweets = () => {
                     </blockquote>
                   </div>
                 }
- 
+
               </CardHeader>
               <CardContent>
                 {

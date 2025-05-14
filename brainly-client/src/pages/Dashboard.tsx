@@ -51,8 +51,6 @@ const Dashboard = () => {
     }
     axios.get(`/api/content/${id}`, { headers: { token: JSON.parse(token) } })
       .then((res) => {
-        // console.log([...res.data.content.tags])
-        // console.log(res.data.content.tags)
         setInputValue({title:res.data.content.title,link:res.data.content.link,tags:[...res.data.content.tags]})
         setTags([...res.data.content.tags])
       })

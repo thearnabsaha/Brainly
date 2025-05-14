@@ -44,6 +44,17 @@ const Youtube = () => {
       .catch((res) => console.log(res))
     window.location.reload();
   }
+    const editValuesHandler = (id: string) => {
+    if (!token) {
+      return;
+    }
+    axios.get(`/api/content/${id}`, { headers: { token: JSON.parse(token) } })
+      .then((res) => {
+        setInputValue({title:res.data.content.title,link:res.data.content.link,tags:[...res.data.content.tags]})
+        setTags([...res.data.content.tags])
+      })
+      .catch((res) => console.log(res))
+  }
   useEffect(() => {
     if (!token) {
       navigate('/')
@@ -119,7 +130,7 @@ const Youtube = () => {
                     {copied && copyId == e._id ? <FaCheck className="text-2xl duration-500 ease-in-out" /> : <MdOutlineContentCopy className="text-2xl duration-500 ease-in-out cursor-pointer" onClick={() => copyHandler(e.link, e._id)} />}
 
                     <Dialog>
-                      <DialogTrigger>
+                      <DialogTrigger onClick={()=>editValuesHandler(e._id)}>
                         <MdOutlineEdit className="text-2xl ml-2 cursor-pointer"/>
                       </DialogTrigger>
                       <DialogContent>
