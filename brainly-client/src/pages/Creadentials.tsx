@@ -78,13 +78,13 @@ const Credentials = () => {
       toast.success('Signup Successful')
       Signupform.reset()
     }
-    res.status==400&&toast.error('Bad Resquest')
+    res.status==400&&toast.error('Invalid Credentials')
     res.status==404&&toast.error("Route doesn't exist")
     res.status==409&&toast.error("User Already Exists")
     res.status==500&&toast.error('Internal Error')
   }
   const handleToastSignin=(res:AxiosResponse)=>{
-    res.status==400&&toast.error('Bad Resquest')
+    res.status==400&&toast.error('Invalid Credentials')
     res.status==404&&toast.error("User doesn't exist")
     res.status==500&&toast.error('Internal Error')
     if(res.status==200){

@@ -224,6 +224,4 @@ brainly-server/
 
 ## Chores To-Do
 
-- Implement a **Change Password** feature.
 - Ensure **Edit** functionality fetches previous values first.
-- sent to / page, if have no token

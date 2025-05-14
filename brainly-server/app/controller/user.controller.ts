@@ -70,11 +70,13 @@ export const changePassword = async (req: Request, res: Response) => {
         if (user) {
             const matched = await bcrypt.compare(req.body.oldPassword, user.password)
             if (matched) {
+                const hashedPassword = await bcrypt.hash(req.body.newPassword, 10)
+                await User.updateOne({ _id: req.id }, { $set: { password: hashedPassword } })
+                res.status(200).send("Password Updated Successfully")
             } else {
                 res.status(400).send("invalid credentials")
             }
-            const hashedPassword = await bcrypt.hash(req.body.newPassword, 10)
-            await User.updateOne({ _id: req.id }, { $set: { password: hashedPassword } })
+
         }
     } catch (error) {
         console.log(error)

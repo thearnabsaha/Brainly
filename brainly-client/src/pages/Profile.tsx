@@ -60,10 +60,8 @@ const Profile = () => {
             return;
         }
         axios.put(`/api/changePassword`, { ...values }, { headers: { token: JSON.parse(token) } })
-            .then((res) => toast.success('Password Changed Successfully'))
-            .catch((res) => console.log(res))
-        console.log(values)
-        // toast.success('Password Changed Successfully')
+            .then(() => toast.success('Password Changed Successfully'))
+            .catch(() => toast.error('Wrong User Password'))
         form.reset()
     }
     const [user, setUser] = useState<{ username?: string; email?: string; posts?: string }>({})
