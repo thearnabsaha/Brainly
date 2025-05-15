@@ -23,5 +23,4 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i key.pem ${{ secrets.AZURE_USER }}@${{ secrets.AZURE_HOST }} << 'EOF'
             cd /home/${{ secrets.AZURE_USER }}/your-app-folder
             git pull origin main
-            npm install
           EOF
