@@ -1,0 +1,28 @@
+name: Deploy to Azure VM
+
+on:
+  push:
+    branches:
+      - main  # or 'master', or whichever branch you use
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up SSH key
+        run: |
+          echo "${{ secrets.AZURE_KEY }}" > key.pem
+          chmod 600 key.pem
+
+      - name: Deploy to Azure VM
+        run: |
+          ssh -o StrictHostKeyChecking=no -i key.pem ${{ secrets.AZURE_USER }}@${{ secrets.AZURE_HOST }} << 'EOF'
+            cd /home/${{ secrets.AZURE_USER }}/your-app-folder
+            git pull origin main
+            npm install
+            pm2 restart all || pm2 start npm --name "myapp" -- start
+          EOF

@@ -37,7 +37,6 @@ app.get('/health', async (req, res) => {
     uptime: process.uptime(),
     message: 'OK',
     timestamp: new Date(),
-    version: require('./package.json').version,
     responseTime: `${Date.now() - start}ms`,
   };
   res.status(200).json(healthcheck);
