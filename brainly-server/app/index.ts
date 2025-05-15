@@ -30,4 +30,18 @@ app.use('/',userRoutes);
 app.use('/content',contentRoutes);
 app.use('/',shareRoutes);
 
+
+app.get('/health', async (req, res) => {
+  const start = Date.now();
+  const healthcheck = {
+    uptime: process.uptime(),
+    message: 'OK',
+    timestamp: new Date(),
+    version: require('./package.json').version,
+    responseTime: `${Date.now() - start}ms`,
+  };
+  res.status(200).json(healthcheck);
+});
+
+
 app.listen(port, () => console.log('> Server is up and running on port: ' + port));
