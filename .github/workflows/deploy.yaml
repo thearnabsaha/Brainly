@@ -21,6 +21,6 @@ jobs:
       - name: Deploy to Azure VM
         run: |
           ssh -o StrictHostKeyChecking=no -i key.pem ${{ secrets.AZURE_USER }}@${{ secrets.AZURE_HOST }} << 'EOF'
-            cd /home/${{ secrets.AZURE_USER }}/your-app-folder
+            cd /home/${{ secrets.AZURE_USER }}/Brainly
             git pull origin main
           EOF
