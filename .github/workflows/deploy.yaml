@@ -3,7 +3,7 @@ name: Deploy to Azure VM
 on:
   push:
     branches:
-      - main  # or 'master', or whichever branch you use
+      - main 
 
 jobs:
   deploy:
@@ -21,6 +21,13 @@ jobs:
       - name: Deploy to Azure VM
         run: |
           ssh -o StrictHostKeyChecking=no -i key.pem ${{ secrets.AZURE_USER }}@${{ secrets.AZURE_HOST }} << 'EOF'
-            cd /home/${{ secrets.AZURE_USER }}/Brainly
+            cd /home/${{ secrets.AZURE_USER }}/Brainly/brainly-server
             git pull origin main
+            sudo apt update
+            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+            source ~/.bashrc
+            nvm install --lts
+            sudo npm install -g pm2
+            npm install
+            pm2 restart all || pm2 start npm --name "myapp" -- run start
           EOF
