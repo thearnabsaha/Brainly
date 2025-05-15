@@ -24,5 +24,4 @@ jobs:
             cd /home/${{ secrets.AZURE_USER }}/your-app-folder
             git pull origin main
             npm install
-            pm2 restart all || pm2 start npm --name "myapp" -- start
           EOF
