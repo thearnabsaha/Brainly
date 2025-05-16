@@ -22,7 +22,7 @@ const Navbar = () => {
   const [sharable, setSharable] = useState(false)
   const token=localStorage.getItem('token')
   useEffect(() => {
-    axios.get("${API_BASE}/shareon",{headers:{token:JSON.parse(token as string)}})
+    axios.get(`${API_BASE}/shareon`,{headers:{token:JSON.parse(token as string)}})
     .then((res)=>{
       setSharable(res.data.isSharing)
       setSharedLink(`${window.location.origin}/share/`+res.data.slug)

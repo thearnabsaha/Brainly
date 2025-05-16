@@ -69,10 +69,9 @@ const Profile = () => {
     useEffect(() => {
         if (!token) {
             navigate('/')
-
             return;
         }
-        axios.get("${API_BASE}/user", { headers: { token: JSON.parse(token) } })
+        axios.get(`${API_BASE}/user`, { headers: { token: JSON.parse(token) } })
             .then((e) => { setUser(e.data) })
             .catch((res) => console.log(res))
     }, [])
