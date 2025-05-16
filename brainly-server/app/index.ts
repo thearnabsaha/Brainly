@@ -6,6 +6,7 @@ const port = process.env.PORT || 3000;
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import morgan from 'morgan';
+import helmet from "helmet";
 import connectDB from './database/db';
 import userRoutes from './routes/user.routes'
 import contentRoutes from './routes/content.routes'
@@ -16,7 +17,7 @@ const morganFormat = ':method :url :status :response-time ms';
 app.use(
   morgan(morganFormat)
 );
-
+app.use(helmet());
 app.use(cors({
   origin: process.env.CORS_ORIGIN,
   credentials: true,
