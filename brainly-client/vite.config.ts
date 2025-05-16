@@ -8,8 +8,8 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:3000/',
-        // target: 'http://4.240.113.255:3000/',
+        // target: 'http://localhost:3000/',
+        target: 'https://brainlys.grevelops.co/',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
       }
