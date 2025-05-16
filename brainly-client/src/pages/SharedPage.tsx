@@ -7,6 +7,8 @@ import axios from "axios";
 import {  useParams } from "react-router-dom";
 import NoPage from "./NoPage";
 import { MdOutlineContentCopy } from "react-icons/md";
+const API_BASE = import.meta.env.VITE_API_BASE;
+
 interface dataInterface{
   _id:string,
   title:string,
@@ -29,7 +31,7 @@ const SharedPage = ()=> {
   const [copyId, setCopyId] = useState("")
   const {id} = useParams()
   useEffect(() => {
-    axios.get(`/api/share/${id}`)
+    axios.get(`${API_BASE}/share/${id}`)
     .then((res)=>{
       setData([...res.data])
     })

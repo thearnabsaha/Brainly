@@ -26,6 +26,8 @@ import toast, { Toaster } from 'react-hot-toast';
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+const API_BASE = import.meta.env.VITE_API_BASE;
+
 const signupSchema = z.object({
   email: z.string().email({ message: 'Invalid email address' }),
   username: z.string().min(3, { message: 'Username must be at least 3 characters long' }),
@@ -58,7 +60,7 @@ const Credentials = () => {
   })
  
   async function onSubmitSignup(values: z.infer<typeof signupSchema>) {
-    await axios.post("api/signup",{...values})
+    await axios.post(`${API_BASE}/signup`,{...values})
     .then((res)=>handleToastSignup(res))
     .catch((res)=>handleToastSignup(res))
   }
@@ -68,7 +70,7 @@ const Credentials = () => {
   })
  
   async function onSubmitSignin(values: z.infer<typeof signinSchema>) {
-    await axios.post("api/signin",{...values})
+    await axios.post(`${API_BASE}/signin`,{...values})
     .then(handleToastSignin)
     .catch((res)=>handleToastSignin(res))
   }

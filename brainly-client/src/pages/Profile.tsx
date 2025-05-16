@@ -5,6 +5,7 @@ import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom";
+const API_BASE = import.meta.env.VITE_API_BASE;
 
 import { Button } from "@/components/ui/button"
 import {
@@ -59,7 +60,7 @@ const Profile = () => {
         if (!token) {
             return;
         }
-        axios.put(`/api/changePassword`, { ...values }, { headers: { token: JSON.parse(token) } })
+        axios.put(`${API_BASE}/changePassword`, { ...values }, { headers: { token: JSON.parse(token) } })
             .then(() => toast.success('Password Changed Successfully'))
             .catch(() => toast.error('Wrong User Password'))
         form.reset()
@@ -71,7 +72,7 @@ const Profile = () => {
 
             return;
         }
-        axios.get("/api/user", { headers: { token: JSON.parse(token) } })
+        axios.get("${API_BASE}/user", { headers: { token: JSON.parse(token) } })
             .then((e) => { setUser(e.data) })
             .catch((res) => console.log(res))
     }, [])

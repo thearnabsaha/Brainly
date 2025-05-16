@@ -11,6 +11,7 @@ import { useRecoilState } from "recoil"
 import axios from "axios"
 import { FaCheck } from "react-icons/fa6";
 import { Switch } from "./ui/switch";
+const API_BASE = import.meta.env.VITE_API_BASE;
 
 const Navbar = () => {
   const [inputValue, setInputValue] = useRecoilState(inputValueState);
@@ -21,7 +22,7 @@ const Navbar = () => {
   const [sharable, setSharable] = useState(false)
   const token=localStorage.getItem('token')
   useEffect(() => {
-    axios.get("/api/shareon",{headers:{token:JSON.parse(token as string)}})
+    axios.get("${API_BASE}/shareon",{headers:{token:JSON.parse(token as string)}})
     .then((res)=>{
       setSharable(res.data.isSharing)
       setSharedLink(`${window.location.origin}/share/`+res.data.slug)
@@ -38,7 +39,7 @@ const Navbar = () => {
       setInputValue({...inputValue,tags:newtags})
       setTagValue("")
     }
-    axios.post('/api/content',{...inputValue},{headers:{token:JSON.parse(token)}})
+    axios.post(`${API_BASE}/content`,{...inputValue},{headers:{token:JSON.parse(token)}})
     .then()
     .catch((res)=>console.log(res))  
     setInputValue({title:"",link:"",tags:[]})
@@ -69,14 +70,14 @@ const Navbar = () => {
   }
   const checkedChangedHandler=()=>{
     if(!sharable){
-      axios.post("/api/shareon",{},{headers:{token:JSON.parse(token)}})
+      axios.post(`${API_BASE}/shareon`,{},{headers:{token:JSON.parse(token)}})
       .then((res)=>{
         setSharedLink(`${window.location.origin}/share/`+res.data.slug)
         setSharable(res.data.isSharing)
       })
       .catch((res)=>console.log(res));
     }else{
-        axios.post("/api/shareoff",{},{headers:{token:JSON.parse(token)}})
+        axios.post(`${API_BASE}/shareoff`,{},{headers:{token:JSON.parse(token)}})
         .then((res)=>{
           setSharedLink("")
           setSharable(res.data.isSharing)

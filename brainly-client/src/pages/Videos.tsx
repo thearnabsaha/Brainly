@@ -10,6 +10,7 @@ import { useRecoilState } from "recoil";
 import { inputValueState, tagsState } from "@/store/atoms";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+const API_BASE = import.meta.env.VITE_API_BASE;
 
 interface dataInterface {
   _id: string,
@@ -39,7 +40,7 @@ const Youtube = () => {
     if (!token) {
       return;
     }
-    axios.delete(`/api/content/${id}`, { headers: { token: JSON.parse(token) } })
+    axios.delete(`${API_BASE}/content/${id}`, { headers: { token: JSON.parse(token) } })
       .then((res) => console.log(res))
       .catch((res) => console.log(res))
     window.location.reload();
@@ -48,7 +49,7 @@ const Youtube = () => {
     if (!token) {
       return;
     }
-    axios.get(`/api/content/${id}`, { headers: { token: JSON.parse(token) } })
+    axios.get(`${API_BASE}/content/${id}`, { headers: { token: JSON.parse(token) } })
       .then((res) => {
         setInputValue({title:res.data.content.title,link:res.data.content.link,tags:[...res.data.content.tags]})
         setTags([...res.data.content.tags])
@@ -60,7 +61,7 @@ const Youtube = () => {
       navigate('/')
       return;
     }
-    axios.get("/api/content", { headers: { token: JSON.parse(token) } })
+    axios.get(`${API_BASE}/content`, { headers: { token: JSON.parse(token) } })
       .then((res) => {
         setData([...res.data.contents])
       })
@@ -80,7 +81,7 @@ const Youtube = () => {
       setInputValue({ ...inputValue, tags: newtags })
       setTagValue("")
     }
-    axios.put(`/api/content/${id}`, { ...inputValue }, { headers: { token: JSON.parse(token) } })
+    axios.put(`${API_BASE}/content/${id}`, { ...inputValue }, { headers: { token: JSON.parse(token) } })
       .then((res)=>console.log(res))
       .catch((res) => console.log(res))
     setInputValue({ title: "", link: "", tags: [] })
