@@ -50,7 +50,7 @@ const Dashboard = () => {
     if (!token) {
       return;
     }
-    axios.get(`${API_BASE}content/${id}`, { headers: { token: JSON.parse(token) } })
+    axios.get(`${API_BASE}/content/${id}`, { headers: { token: JSON.parse(token) } })
       .then((res) => {
         setInputValue({title:res.data.content.title,link:res.data.content.link,tags:[...res.data.content.tags]})
         setTags([...res.data.content.tags])
@@ -62,7 +62,7 @@ const Dashboard = () => {
       navigate('/')
       return;
     }
-    axios.get("${API_BASE}/content", { headers: { token: JSON.parse(token) } })
+    axios.get(`${API_BASE}/content`, { headers: { token: JSON.parse(token) } })
       .then((res) => {
         setData([...res.data.contents])
       })
