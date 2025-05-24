@@ -85,6 +85,8 @@ const Profile = () => {
                 <h1>Total Saved Posts : {user.posts}</h1>
             </Card>
             <Card className="px-6 gap-4 mt-10 w-72 sm:w-96">
+                <h1 className="text-3xl">Change Password</h1>
+                <p className="font-bold">Sorry, this feature is disabled to prevent changes to the demo password.</p>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                         <FormField
@@ -93,7 +95,7 @@ const Profile = () => {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormControl>
-                                        <Input placeholder="Old Password" {...field} type="password" />
+                                        <Input placeholder="Old Password" {...field} type="password" disabled/>
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -105,7 +107,7 @@ const Profile = () => {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormControl>
-                                        <Input placeholder="New Password" {...field} type="password" />
+                                        <Input placeholder="New Password" {...field} type="password" disabled/>
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -117,13 +119,13 @@ const Profile = () => {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormControl>
-                                        <Input placeholder="Confirm Password" {...field} type="password" />
+                                        <Input placeholder="Confirm Password" {...field} type="password" disabled/>
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
-                        <Button type="submit" className="cursor-pointer">Submit</Button>
+                        <Button type="submit" className="cursor-pointer" disabled>Submit</Button>
                     </form>
                 </Form>
             </Card>

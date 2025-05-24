@@ -34,8 +34,6 @@ connectDB()
 app.use('/',userRoutes);
 app.use('/content',contentRoutes);
 app.use('/',shareRoutes);
-
-
 app.get('/health', async (req, res) => {
   const start = Date.now();
   const healthcheck = {

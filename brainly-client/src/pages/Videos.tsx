@@ -176,7 +176,6 @@ const Youtube = () => {
               <CardFooter>
                 <p>Added on {formatDate(e.createdAt)}</p>
               </CardFooter>
-
             </Card>
           )
         })
