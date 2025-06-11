@@ -27,27 +27,26 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 const API_BASE = import.meta.env.VITE_API_BASE;
-
 const signupSchema = z.object({
   email: z.string().email({ message: 'Invalid email address' }),
   username: z.string().min(3, { message: 'Username must be at least 3 characters long' }),
   password: z
-    .string()
-    .min(8, { message: 'Password must be at least 8 characters long' })
-    .regex(/[A-Z]/, { message: 'Password must contain at least one uppercase letter' })
-    .regex(/[a-z]/, { message: 'Password must contain at least one lowercase letter' })
-    .regex(/[0-9]/, { message: 'Password must contain at least one number' })
-    .regex(/[@$!%*?&]/, { message: 'Password must contain at least one special character' }),
+  .string()
+  .min(8, { message: 'Password must be at least 8 characters long' })
+  .regex(/[A-Z]/, { message: 'Password must contain at least one uppercase letter' })
+  .regex(/[a-z]/, { message: 'Password must contain at least one lowercase letter' })
+  .regex(/[0-9]/, { message: 'Password must contain at least one number' })
+  .regex(/[@$!%*?&]/, { message: 'Password must contain at least one special character' }),
 });
 const signinSchema = z.object({
   username: z.string().min(3, { message: 'Username must be at least 3 characters long' }),
   password: z
-    .string()
-    .min(8, { message: 'Password must be at least 8 characters long' })
-    .regex(/[A-Z]/, { message: 'Password must contain at least one uppercase letter' })
-    .regex(/[a-z]/, { message: 'Password must contain at least one lowercase letter' })
-    .regex(/[0-9]/, { message: 'Password must contain at least one number' })
-    .regex(/[@$!%*?&]/, { message: 'Password must contain at least one special character' }),
+  .string()
+  .min(8, { message: 'Password must be at least 8 characters long' })
+  .regex(/[A-Z]/, { message: 'Password must contain at least one uppercase letter' })
+  .regex(/[a-z]/, { message: 'Password must contain at least one lowercase letter' })
+  .regex(/[0-9]/, { message: 'Password must contain at least one number' })
+  .regex(/[@$!%*?&]/, { message: 'Password must contain at least one special character' }),
 });
 const Credentials = () => {
   const Signupform = useForm<z.infer<typeof signupSchema>>({
@@ -58,17 +57,17 @@ const Credentials = () => {
       password: "",
     }
   })
- 
+  
   async function onSubmitSignup(values: z.infer<typeof signupSchema>) {
     await axios.post(`${API_BASE}/signup`,{...values})
     .then((res)=>handleToastSignup(res))
     .catch((res)=>handleToastSignup(res))
   }
-
+  
   const Signinform = useForm<z.infer<typeof signinSchema>>({
     resolver: zodResolver(signinSchema)
   })
- 
+  
   async function onSubmitSignin(values: z.infer<typeof signinSchema>) {
     await axios.post(`${API_BASE}/signin`,{...values})
     .then(handleToastSignin)
@@ -95,8 +94,6 @@ const Credentials = () => {
       navigate("/user")
     }
   }
-
-  
   return (
     <div className="h-screen w-screen flex justify-center items-center">
       <h1 className="absolute top-5 sm:top-10 border rounded-lg px-2 py-1">Demo Username: thearnabsaha , Password: Arnab@123 </h1>
