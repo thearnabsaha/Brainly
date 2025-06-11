@@ -18,14 +18,16 @@ app.use(
   morgan(morganFormat)
 );
 app.use(helmet());
-app.use(cors({
-  origin: process.env.CORS_ORIGIN,
-  credentials: true,
-}));
-app.options('*', cors({
-  origin: process.env.CORS_ORIGIN,
-  credentials: true,
-}));
+if(process.env.CORS_ORIGIN){
+  app.use(cors({
+    origin: process.env.CORS_ORIGIN.split(','),
+    credentials: true,
+  }));
+  app.options('*', cors({
+    origin: process.env.CORS_ORIGIN.split(','),
+    credentials: true,
+  }));
+}
 app.use(express.json({ limit: '16kb' }));
 app.use(express.urlencoded({ extended: true, limit: '16kb' }));
 app.use(express.static('public'));
