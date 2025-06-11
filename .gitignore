@@ -1,4 +1,5 @@
 docker.compose.dev.yaml
+docker.compose.prod.yaml
 # Logs
 logs
 *.log
