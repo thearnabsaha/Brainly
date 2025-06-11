@@ -20,11 +20,11 @@ app.use(
 app.use(helmet());
 if(process.env.CORS_ORIGIN){
   app.use(cors({
-    origin: process.env.CORS_ORIGIN.split(','),
+    origin: process.env.CORS_ORIGIN,
     credentials: true,
   }));
   app.options('*', cors({
-    origin: process.env.CORS_ORIGIN.split(','),
+    origin: process.env.CORS_ORIGIN,
     credentials: true,
   }));
 }
