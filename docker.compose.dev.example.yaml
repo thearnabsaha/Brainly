@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  backend:
+    build:
+      context: ./brainly-server
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./brainly-server:/Brainly
+      - /Brainly/node_modules
+    environment:
+      - NODE_ENV=
+      - JWT_SECRET_KEY=
+      - MONGODB_URI=
+
+  frontend:
+    build:
+      context: ./brainly-client
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./brainly-client:/Brainly
+      - /Brainly/node_modules
+    environment:
+      - VITE_API_BASE=

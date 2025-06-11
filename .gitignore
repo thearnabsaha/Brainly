@@ -1,3 +1,4 @@
+docker.compose.dev.yaml
 # Logs
 logs
 *.log
@@ -25,4 +26,3 @@ dist-ssr
 
 # Environment files
 .env
-docker.compose.dev.yaml
